@@ -3,7 +3,6 @@ from flask_login import login_user, current_user, logout_user, login_required
 from app import db
 from models import User, SavedExam
 from forms import RegistrationForm, LoginForm, SearchForm, ChatbotForm
-from chatbot import chatbot
 from data import (
     get_exam_categories, 
     get_exams_by_category, 
@@ -170,13 +169,21 @@ def register_routes(app):
 
     @app.route('/chatbot', methods=['POST'])
     def chatbot_query():
+        """
+        This endpoint is maintained for compatibility with the pop-up chatbot
+        that still expects a server endpoint. In practice, client-side processing
+        is handled by JavaScript directly with window.clientChatbot
+        """
         message = request.json.get('message', '')
         
         if not message:
             return jsonify({'error': 'No message provided'}), 400
-            
-        response = chatbot.get_response(message)
-        return jsonify(response)
+        
+        # Simple fallback for API compatibility
+        return jsonify({
+            'text': "The server-side chatbot has been replaced with a client-side implementation. Please refresh the page to use the latest version.",
+            'status': 'success'
+        })
     
     @app.errorhandler(404)
     def page_not_found(e):
