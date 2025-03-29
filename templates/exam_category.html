@@ -9,18 +9,7 @@
 </section>
 
 <section class="container">
-    <!-- Subcategories Navigation -->
-    {% if category.subcategories %}
-    <div class="subcategories-nav">
-        <h3>Subcategories</h3>
-        <div class="subcategory-buttons">
-            <a href="{{ url_for('exam_category', category_id=category.id) }}" class="btn {% if not subcategory %}btn-primary{% else %}btn-secondary{% endif %}">All</a>
-            {% for subcat in category.subcategories %}
-            <a href="{{ url_for('exam_category', category_id=category.id, subcategory=subcat.id) }}" class="btn {% if subcategory == subcat.id %}btn-primary{% else %}btn-secondary{% endif %}">{{ subcat.name }}</a>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
+    <!-- No subcategories as per request -->
     
     <!-- Exams List -->
     <div class="exams-list">
@@ -49,7 +38,7 @@
         </div>
         {% else %}
         <div class="no-exams-message">
-            <p>No exams found for this category{% if subcategory %} and subcategory{% endif %}.</p>
+            <p>No exams found for this category.</p>
         </div>
         {% endif %}
     </div>

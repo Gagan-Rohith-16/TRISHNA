@@ -3,134 +3,79 @@ This module contains all the data related to exams.
 It provides functions to retrieve and search through the exam data.
 """
 
-# List of exam categories with their subcategories
+# List of exam categories
 EXAM_CATEGORIES = [
     {
         "id": "engineering",
         "name": "Engineering Entrance Exams",
         "description": "Exams for admission to undergraduate and postgraduate engineering programs",
-        "icon_class": "fa-cogs",
-        "subcategories": [
-            {"id": "eng_national", "name": "National Level"},
-            {"id": "eng_state", "name": "State Level"},
-            {"id": "eng_private", "name": "Private Universities"}
-        ]
+        "icon_class": "fa-cogs"
     },
     {
         "id": "medical",
         "name": "Medical Entrance Exams",
         "description": "Exams for admission to MBBS, BDS, AYUSH and other medical courses",
-        "icon_class": "fa-stethoscope",
-        "subcategories": [
-            {"id": "med_national", "name": "National Level"},
-            {"id": "med_state", "name": "State Level"},
-            {"id": "med_super", "name": "Super Speciality"}
-        ]
+        "icon_class": "fa-stethoscope"
     },
     {
         "id": "management",
         "name": "Management Entrance Exams",
         "description": "Exams for admission to MBA and other management courses",
-        "icon_class": "fa-briefcase",
-        "subcategories": [
-            {"id": "mba_national", "name": "National Level"},
-            {"id": "mba_state", "name": "State Level"},
-            {"id": "mba_institute", "name": "Institute Level"}
-        ]
+        "icon_class": "fa-briefcase"
     },
     {
         "id": "law",
         "name": "Law Entrance Exams",
         "description": "Exams for admission to undergraduate and postgraduate law programs",
-        "icon_class": "fa-gavel",
-        "subcategories": [
-            {"id": "law_national", "name": "National Level"},
-            {"id": "law_state", "name": "State Level"}
-        ]
+        "icon_class": "fa-gavel"
     },
     {
         "id": "upsc",
         "name": "UPSC Exams",
         "description": "Civil Services and other examinations conducted by UPSC",
-        "icon_class": "fa-landmark",
-        "subcategories": [
-            {"id": "upsc_civil", "name": "Civil Services"},
-            {"id": "upsc_defense", "name": "Defense Services"},
-            {"id": "upsc_others", "name": "Other UPSC Exams"}
-        ]
+        "icon_class": "fa-landmark"
     },
     {
         "id": "state_psc",
         "name": "State PSC Exams",
         "description": "Civil Services examinations conducted by State Public Service Commissions",
-        "icon_class": "fa-university",
-        "subcategories": [
-            {"id": "psc_north", "name": "North Indian States"},
-            {"id": "psc_south", "name": "South Indian States"},
-            {"id": "psc_east", "name": "East Indian States"},
-            {"id": "psc_west", "name": "West Indian States"}
-        ]
+        "icon_class": "fa-university"
     },
     {
         "id": "banking",
         "name": "Banking Exams",
         "description": "Exams for recruitment in public and private sector banks",
-        "icon_class": "fa-money-bill-wave",
-        "subcategories": [
-            {"id": "bank_po", "name": "Probationary Officers"},
-            {"id": "bank_clerk", "name": "Clerks"},
-            {"id": "bank_specialist", "name": "Specialist Officers"}
-        ]
+        "icon_class": "fa-money-bill-wave"
     },
     {
         "id": "ssc",
         "name": "SSC Exams",
         "description": "Staff Selection Commission exams for various government posts",
-        "icon_class": "fa-users",
-        "subcategories": []
+        "icon_class": "fa-users"
     },
     {
         "id": "railways",
         "name": "Railway Exams",
         "description": "Exams for recruitment in Indian Railways",
-        "icon_class": "fa-train",
-        "subcategories": [
-            {"id": "rrb_ntpc", "name": "RRB NTPC"},
-            {"id": "rrb_group_d", "name": "RRB Group D"},
-            {"id": "rrb_alp", "name": "RRB ALP & Technician"}
-        ]
+        "icon_class": "fa-train"
     },
     {
         "id": "defense",
         "name": "Defense Exams",
         "description": "Exams for recruitment in Indian Armed Forces",
-        "icon_class": "fa-shield-alt",
-        "subcategories": [
-            {"id": "def_army", "name": "Indian Army"},
-            {"id": "def_navy", "name": "Indian Navy"},
-            {"id": "def_airforce", "name": "Indian Air Force"}
-        ]
+        "icon_class": "fa-shield-alt"
     },
     {
         "id": "teaching",
         "name": "Teaching Exams",
         "description": "Exams for recruitment as teachers in schools and colleges",
-        "icon_class": "fa-chalkboard-teacher",
-        "subcategories": [
-            {"id": "teach_net", "name": "UGC NET/JRF"},
-            {"id": "teach_tet", "name": "TET Exams"},
-            {"id": "teach_stet", "name": "State TETs"}
-        ]
+        "icon_class": "fa-chalkboard-teacher"
     },
     {
         "id": "abroad",
         "name": "Study Abroad Exams",
         "description": "Exams for admission to universities abroad",
-        "icon_class": "fa-globe",
-        "subcategories": [
-            {"id": "abroad_general", "name": "General Exams"},
-            {"id": "abroad_subject", "name": "Subject Specific"}
-        ]
+        "icon_class": "fa-globe"
     }
 ]
 
