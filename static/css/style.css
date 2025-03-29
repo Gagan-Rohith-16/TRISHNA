@@ -239,6 +239,19 @@ p {
     height: 100%;
 }
 
+/* Exam Meta Information */
+.exam-meta {
+    margin-top: 1rem;
+}
+
+.exam-meta-item {
+    margin-bottom: 0.75rem;
+}
+
+.exam-meta-item:last-child {
+    margin-top: 1rem;
+}
+
 .category-card-header {
     display: flex;
     align-items: center;
@@ -639,6 +652,45 @@ p {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+/* Official Links */
+.official-link {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    color: var(--accent-color);
+    padding: 0.5rem 0.75rem;
+    background-color: var(--light-accent);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.official-link:hover {
+    background-color: var(--accent-color);
+    color: var(--light-text);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/* External Resources */
+.external-resources {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.resource-item i {
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    color: var(--primary-color);
 }
 
 /* Footer */
