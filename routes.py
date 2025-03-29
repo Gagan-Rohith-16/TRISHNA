@@ -8,7 +8,9 @@ from data import (
     get_exam_categories, 
     get_exams_by_category, 
     get_exam_details, 
-    search_exams
+    search_exams,
+    EXAM_CATEGORIES,
+    EXAMS_DATA
 )
 
 def register_routes(app):
@@ -158,6 +160,14 @@ def register_routes(app):
         return render_template('search_results.html', title='Search Results',
                               query=request.args.get('query', ''), results=results)
     
+    @app.route('/chatbot-page')
+    def chatbot_page():
+        """Render the chatbot HTML page with exam data loaded for client-side processing"""
+        categories = EXAM_CATEGORIES
+        exams_data = EXAMS_DATA
+        return render_template('chatbot.html', title='ExamSeek Chatbot', 
+                              categories=categories, exams_data=exams_data)
+
     @app.route('/chatbot', methods=['POST'])
     def chatbot_query():
         message = request.json.get('message', '')

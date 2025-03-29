@@ -115,37 +115,65 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Fetch response from server
+    // Fetch response from server or use client-side chatbot
     function fetchChatbotResponse(message) {
-        fetch('/chatbot', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: JSON.stringify({ message: message })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Hide loading indicator
-            hideLoadingIndicator();
-            
-            // Display bot response
-            if (data.status === 'success') {
-                displayBotMessage(data.text);
-            } else {
-                displayBotMessage("I'm sorry, I encountered an error. Please try again later.");
-                console.error('Chatbot error:', data.error);
+        // Check if client-side chatbot is available
+        if (window.clientChatbot && window.clientChatbot.initialized) {
+            console.log("Using client-side chatbot");
+            // Use client-side chatbot
+            try {
+                const response = window.clientChatbot.getResponse(message);
+                // Hide loading indicator
+                hideLoadingIndicator();
+                
+                // Display bot response
+                if (response.status === 'success') {
+                    displayBotMessage(response.text);
+                } else {
+                    displayBotMessage("I'm sorry, I encountered an error. Please try again later.");
+                    console.error('Client chatbot error:', response.error);
+                }
+            } catch (error) {
+                // Hide loading indicator
+                hideLoadingIndicator();
+                
+                // Display error message
+                displayBotMessage("I'm sorry, something went wrong with the chatbot. Please try again later.");
+                console.error('Client chatbot error:', error);
             }
-        })
-        .catch(error => {
-            // Hide loading indicator
-            hideLoadingIndicator();
-            
-            // Display error message
-            displayBotMessage("I'm sorry, I'm having trouble connecting to the server. Please try again later.");
-            console.error('Chatbot fetch error:', error);
-        });
+        } else {
+            console.log("Using server-side chatbot");
+            // Fall back to server-side chatbot
+            fetch('/chatbot', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loading indicator
+                hideLoadingIndicator();
+                
+                // Display bot response
+                if (data.status === 'success') {
+                    displayBotMessage(data.text);
+                } else {
+                    displayBotMessage("I'm sorry, I encountered an error. Please try again later.");
+                    console.error('Chatbot error:', data.error);
+                }
+            })
+            .catch(error => {
+                // Hide loading indicator
+                hideLoadingIndicator();
+                
+                // Display error message
+                displayBotMessage("I'm sorry, I'm having trouble connecting to the server. Please try again later.");
+                console.error('Chatbot fetch error:', error);
+            });
+        }
     }
     
     // Scroll chat to bottom

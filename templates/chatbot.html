@@ -1,0 +1,577 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card chatbot-page-card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0"><i class="fas fa-robot mr-2"></i> ExamSeek AI Assistant</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h4>What can the AI do?</h4>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="chatbot-capabilities-list">
+                                        <li><i class="fas fa-check-circle text-success"></i> Provide exam-specific information</li>
+                                        <li><i class="fas fa-check-circle text-success"></i> Share eligibility criteria</li>
+                                        <li><i class="fas fa-check-circle text-success"></i> Explain exam patterns</li>
+                                        <li><i class="fas fa-check-circle text-success"></i> Summarize syllabus details</li>
+                                        <li><i class="fas fa-check-circle text-success"></i> Guide through application procedures</li>
+                                        <li><i class="fas fa-check-circle text-success"></i> Provide preparation tips</li>
+                                        <li><i class="fas fa-check-circle text-success"></i> Share important dates</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card mt-4">
+                                <div class="card-header bg-light">
+                                    <h4>Sample Questions</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="sample-questions">
+                                        <p class="sample-question" onclick="askSampleQuestion(this)">What is JEE Main?</p>
+                                        <p class="sample-question" onclick="askSampleQuestion(this)">Tell me about UPSC eligibility.</p>
+                                        <p class="sample-question" onclick="askSampleQuestion(this)">What's the NEET exam pattern?</p>
+                                        <p class="sample-question" onclick="askSampleQuestion(this)">When is the GATE exam?</p>
+                                        <p class="sample-question" onclick="askSampleQuestion(this)">How to prepare for banking exams?</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <div class="standalone-chatbot-container">
+                                <div class="standalone-chatbot-messages" id="standalone-messages">
+                                    <!-- Welcome message will be added by JS -->
+                                </div>
+                                <div class="standalone-chatbot-input">
+                                    <input type="text" id="standalone-input" placeholder="Type your question here..." class="form-control">
+                                    <button id="standalone-send-btn" class="btn btn-primary"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Exam data for client-side chatbot
+    const examCategories = {{ categories|tojson }};
+    const examsData = {{ exams_data|tojson }};
+    
+    class ClientChatbot {
+        constructor() {
+            this.initialized = true;
+            
+            // Define common responses and FAQs
+            this.commonQuestions = {
+                "help": "I can help you with information about entrance exams, government job exams, eligibility criteria, exam patterns, syllabus, and application procedures. Just ask me anything about Indian exams!",
+                "greeting": ["Hello! How can I help you with your exam preparation today?", 
+                           "Hi there! I'm ExamSeek Assistant. What would you like to know about exams?",
+                           "Welcome to ExamSeek! I'm here to help with your exam-related questions."],
+                "thanks": ["You're welcome! Feel free to ask if you have more questions.",
+                          "Happy to help! Let me know if you need anything else.",
+                          "Anytime! Good luck with your exam preparation!"],
+                "capabilities": "I can provide information about various Indian exams, including details on eligibility, exam patterns, important dates, and preparation tips. I can also help you find the right exam based on your interests.",
+                "bye": ["Goodbye! Good luck with your exam preparation!",
+                       "See you later! Don't hesitate to return if you have more questions.",
+                       "Bye! Wishing you success in your exams!"]
+            };
+            
+            this.examTips = {
+                "general": [
+                    "Create a structured study plan and stick to it.",
+                    "Take regular breaks during study sessions to maintain focus.",
+                    "Practice previous years' question papers to understand the exam pattern.",
+                    "Join study groups or find a study partner for motivation.",
+                    "Stay healthy by getting enough sleep, exercise, and proper nutrition."
+                ],
+                "engineering": [
+                    "Focus on understanding concepts rather than memorizing formulas.",
+                    "Practice numerical problems regularly to build speed and accuracy.",
+                    "For JEE/GATE, prioritize topics with higher weightage.",
+                    "Create short notes for quick revision before the exam.",
+                    "Solve mock tests under timed conditions to improve time management."
+                ],
+                "medical": [
+                    "For NEET, thoroughly master NCERT textbooks before moving to reference books.",
+                    "Practice diagram-based questions for Biology.",
+                    "Memorize important reactions and equations in Chemistry.",
+                    "Focus on understanding concepts in Physics rather than rote learning.",
+                    "Take regular mock tests to identify and improve weak areas."
+                ],
+                "upsc": [
+                    "Read newspapers daily to stay updated on current affairs.",
+                    "Make concise notes while studying for effective revision.",
+                    "Practice answer writing regularly for the Mains examination.",
+                    "Develop a multidisciplinary approach to issues.",
+                    "Focus on NCERT textbooks to build a strong foundation."
+                ],
+                "banking": [
+                    "Practice quantitative aptitude and reasoning questions daily.",
+                    "Stay updated with banking and financial current affairs.",
+                    "Improve your speed and accuracy for the preliminary exam.",
+                    "Take sectional tests to identify and work on weak areas.",
+                    "Learn shortcuts for quick calculations in quantitative sections."
+                ]
+            };
+        }
+        
+        getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+        
+        getResponse(message) {
+            try {
+                // Convert message to lowercase for easier matching
+                const messageLower = message.toLowerCase();
+                
+                // Check for greetings
+                if (/hello|hi|hey|greetings|namaste/.test(messageLower)) {
+                    return {
+                        text: this.getRandomItem(this.commonQuestions.greeting),
+                        status: "success"
+                    };
+                }
+                
+                // Check for thanks
+                if (/thank|thanks|appreciate|helpful/.test(messageLower)) {
+                    return {
+                        text: this.getRandomItem(this.commonQuestions.thanks),
+                        status: "success"
+                    };
+                }
+                
+                // Check for goodbyes
+                if (/bye|goodbye|see you|farewell/.test(messageLower)) {
+                    return {
+                        text: this.getRandomItem(this.commonQuestions.bye),
+                        status: "success"
+                    };
+                }
+                
+                // Check for help request
+                if (/help|assist|what can you do|capabilities/.test(messageLower)) {
+                    return {
+                        text: this.commonQuestions.capabilities,
+                        status: "success"
+                    };
+                }
+                
+                // Check for exam category information
+                for (const category of examCategories) {
+                    const categoryName = category.name.toLowerCase();
+                    const categoryId = category.id.toLowerCase();
+                    if (messageLower.includes(categoryName) || messageLower.includes(categoryId)) {
+                        let response = `**${category.name}**: ${category.description}\n\n`;
+                        response += "You can ask me about specific exams in this category!";
+                        return {
+                            text: response,
+                            status: "success"
+                        };
+                    }
+                }
+                
+                // Check for specific exam information
+                for (const exam of examsData) {
+                    const examNameLower = exam.name.toLowerCase();
+                    const examFullNameLower = exam.full_name.toLowerCase();
+                    
+                    if (messageLower.includes(examNameLower) || messageLower.includes(examFullNameLower)) {
+                        // Looking for specific aspects
+                        if (messageLower.includes("eligibility")) {
+                            return {
+                                text: `**Eligibility for ${exam.name}**: ${exam.eligibility || 'Information not available'}`,
+                                status: "success"
+                            };
+                        } else if (messageLower.includes("pattern") || messageLower.includes("structure")) {
+                            return {
+                                text: `**Exam Pattern for ${exam.name}**: ${exam.exam_pattern || 'Information not available'}`,
+                                status: "success"
+                            };
+                        } else if (messageLower.includes("syllabus") || messageLower.includes("curriculum")) {
+                            return {
+                                text: `**Syllabus for ${exam.name}**: ${exam.syllabus || 'Information not available'}`,
+                                status: "success"
+                            };
+                        } else if (messageLower.includes("application") || messageLower.includes("apply") || messageLower.includes("registration")) {
+                            return {
+                                text: `**Application Procedure for ${exam.name}**: ${exam.application_procedure || 'Information not available'}`,
+                                status: "success"
+                            };
+                        } else if (messageLower.includes("date") || messageLower.includes("schedule") || messageLower.includes("when")) {
+                            const importantDates = exam.important_dates || {};
+                            let datesInfo = Object.entries(importantDates).map(([key, value]) => 
+                                `- **${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}**: ${value}`
+                            ).join('\n');
+                            
+                            if (!datesInfo) {
+                                datesInfo = "Information not available";
+                            }
+                            return {
+                                text: `**Important Dates for ${exam.name}**:\n${datesInfo}`,
+                                status: "success"
+                            };
+                        } else if (/tip|advice|prepare|suggestion/.test(messageLower)) {
+                            const preparationTips = exam.preparation_tips || [];
+                            const tips = preparationTips.length ? 
+                                preparationTips.map(tip => `- ${tip}`).join('\n') : 
+                                "No specific tips available for this exam.";
+                            return {
+                                text: `**Preparation Tips for ${exam.name}**:\n${tips}`,
+                                status: "success"
+                            };
+                        } else {
+                            // General overview
+                            let response = `**${exam.full_name} (${exam.name})**\n\n`;
+                            response += `${exam.description}\n\n`;
+                            response += `**Conducted by**: ${exam.conducting_body || 'Information not available'}\n`;
+                            response += `**Frequency**: ${exam.frequency || 'Information not available'}\n\n`;
+                            response += "You can ask me more specific questions about eligibility, exam pattern, syllabus, application procedure, or important dates for this exam!";
+                            return {
+                                text: response,
+                                status: "success"
+                            };
+                        }
+                    }
+                }
+                
+                // Check for preparation tips
+                if (/tip|advice|suggestion|prepare/.test(messageLower)) {
+                    // Check for category-specific tips
+                    const categoryMatches = [
+                        { key: "engineering", terms: ["engineering", "jee", "gate", "technical"] },
+                        { key: "medical", terms: ["medical", "neet", "doctor", "mbbs"] },
+                        { key: "upsc", terms: ["upsc", "civil service", "ias", "ips", "government service"] },
+                        { key: "banking", terms: ["bank", "sbi", "rbi", "finance"] }
+                    ];
+                    
+                    for (const { key, terms } of categoryMatches) {
+                        if (terms.some(term => messageLower.includes(term))) {
+                            const tipsList = this.examTips[key] || [];
+                            const tips = tipsList.length ? 
+                                tipsList.map(tip => `- ${tip}`).join('\n') : 
+                                "No specific tips available for this category.";
+                            return {
+                                text: `**Preparation Tips for ${key.charAt(0).toUpperCase() + key.slice(1)} Exams**:\n${tips}`,
+                                status: "success"
+                            };
+                        }
+                    }
+                    
+                    // General tips if no specific category found
+                    const tipsList = this.examTips.general || [];
+                    const tips = tipsList.length ? 
+                        tipsList.map(tip => `- ${tip}`).join('\n') : 
+                        "No general tips available.";
+                    return {
+                        text: `**General Exam Preparation Tips**:\n${tips}`,
+                        status: "success"
+                    };
+                }
+                
+                // If no specific match is found, provide a general response
+                return {
+                    text: "I'm not sure I understand your question. You can ask me about:\n\n" +
+                           "- Specific exams like JEE, NEET, UPSC, SBI PO, etc.\n" +
+                           "- Exam categories like Engineering, Medical, Banking\n" +
+                           "- Details like eligibility, exam pattern, syllabus\n" +
+                           "- Application procedures and important dates\n" +
+                           "- Preparation tips and advice\n\n" +
+                           "Could you please rephrase your question?",
+                    status: "success"
+                };
+                
+            } catch (error) {
+                console.error("Error processing message:", error);
+                return {
+                    text: "I'm sorry, but I encountered an error processing your request. Please try again with a different question.",
+                    status: "error",
+                    error: error.toString()
+                };
+            }
+        }
+    }
+    
+    // This will be available globally for the chatbot.js script to use
+    window.clientChatbot = new ClientChatbot();
+    
+    // Initialize the standalone chatbot
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatbotMessages = document.getElementById('standalone-messages');
+        const chatbotInput = document.getElementById('standalone-input');
+        const chatbotSendButton = document.getElementById('standalone-send-btn');
+        let isWaitingForResponse = false;
+        
+        // Show welcome message
+        displayBotMessage(window.clientChatbot.getRandomItem(window.clientChatbot.commonQuestions.greeting));
+        
+        // Function to send a message
+        function sendMessage() {
+            const message = chatbotInput.value.trim();
+            
+            if (!message || isWaitingForResponse) {
+                return;
+            }
+            
+            // Display user message
+            displayUserMessage(message);
+            
+            // Clear input field
+            chatbotInput.value = '';
+            
+            // Show loading indicator
+            showLoadingIndicator();
+            
+            // Get response from client-side chatbot
+            setTimeout(() => {
+                try {
+                    const response = window.clientChatbot.getResponse(message);
+                    
+                    // Hide loading indicator
+                    hideLoadingIndicator();
+                    
+                    // Display bot response
+                    if (response.status === 'success') {
+                        displayBotMessage(response.text);
+                    } else {
+                        displayBotMessage("I'm sorry, I encountered an error. Please try again.");
+                        console.error('Chatbot error:', response.error);
+                    }
+                } catch (error) {
+                    // Hide loading indicator
+                    hideLoadingIndicator();
+                    
+                    // Display error message
+                    displayBotMessage("I'm sorry, something went wrong. Please try again.");
+                    console.error('Error:', error);
+                }
+            }, 500); // Small delay to show the loading indicator
+        }
+        
+        // Display user message
+        function displayUserMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message user-message';
+            messageElement.textContent = message;
+            chatbotMessages.appendChild(messageElement);
+            scrollToBottom();
+        }
+        
+        // Display bot message
+        function displayBotMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message bot-message';
+            
+            // Convert URLs to clickable links
+            message = message.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+            
+            // Process markdown-like formatting
+            message = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold
+            message = message.replace(/\*(.*?)\*/g, '<em>$1</em>'); // Italic
+            
+            // Handle bullet points
+            const hasBullets = message.includes('\n- ');
+            if (hasBullets) {
+                let parts = message.split('\n');
+                for (let i = 0; i < parts.length; i++) {
+                    if (parts[i].startsWith('- ')) {
+                        parts[i] = '<li>' + parts[i].substring(2) + '</li>';
+                    }
+                }
+                
+                let inList = false;
+                for (let i = 0; i < parts.length; i++) {
+                    if (parts[i].startsWith('<li>') && !inList) {
+                        parts[i] = '<ul>' + parts[i];
+                        inList = true;
+                    } else if (!parts[i].startsWith('<li>') && inList) {
+                        parts[i-1] = parts[i-1] + '</ul>';
+                        inList = false;
+                    }
+                }
+                
+                if (inList) {
+                    parts[parts.length-1] = parts[parts.length-1] + '</ul>';
+                }
+                
+                message = parts.join('\n');
+            }
+            
+            messageElement.innerHTML = message;
+            chatbotMessages.appendChild(messageElement);
+            scrollToBottom();
+        }
+        
+        // Show loading indicator
+        function showLoadingIndicator() {
+            isWaitingForResponse = true;
+            const loadingElement = document.createElement('div');
+            loadingElement.className = 'message bot-message loading-message';
+            loadingElement.innerHTML = '<div class="loading-spinner"></div> <span>Thinking...</span>';
+            loadingElement.id = 'loading-indicator';
+            chatbotMessages.appendChild(loadingElement);
+            scrollToBottom();
+        }
+        
+        // Hide loading indicator
+        function hideLoadingIndicator() {
+            isWaitingForResponse = false;
+            const loadingElement = document.getElementById('loading-indicator');
+            if (loadingElement) {
+                loadingElement.remove();
+            }
+        }
+        
+        // Scroll to bottom of chat
+        function scrollToBottom() {
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+        
+        // Event listeners
+        chatbotSendButton.addEventListener('click', sendMessage);
+        
+        chatbotInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Global function for sample questions
+        window.askSampleQuestion = function(element) {
+            if (!isWaitingForResponse) {
+                chatbotInput.value = element.textContent;
+                sendMessage();
+            }
+        };
+    });
+</script>
+
+<style>
+    /* Styles for the standalone chatbot page */
+    .chatbot-page-card {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .standalone-chatbot-container {
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #f9f9f9;
+    }
+    
+    .standalone-chatbot-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        background-color: #fff;
+    }
+    
+    .standalone-chatbot-input {
+        display: flex;
+        border-top: 1px solid #e0e0e0;
+        padding: 10px;
+        background-color: #f5f5f5;
+    }
+    
+    .standalone-chatbot-input input {
+        flex: 1;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+    
+    .standalone-chatbot-input button {
+        width: 50px;
+        border-radius: 4px;
+    }
+    
+    .message {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 18px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+    
+    .user-message {
+        background-color: #e1f5fe;
+        color: #0277bd;
+        margin-left: auto;
+        border-bottom-right-radius: 5px;
+    }
+    
+    .bot-message {
+        background-color: #f5f5f5;
+        color: #424242;
+        margin-right: auto;
+        border-bottom-left-radius: 5px;
+    }
+    
+    .loading-message {
+        display: flex;
+        align-items: center;
+    }
+    
+    .loading-spinner {
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: #1A237E;
+        animation: spin 1s ease-in-out infinite;
+        margin-right: 10px;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    .chatbot-capabilities-list {
+        list-style: none;
+        padding-left: 0;
+    }
+    
+    .chatbot-capabilities-list li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .chatbot-capabilities-list i {
+        margin-right: 10px;
+    }
+    
+    .sample-questions {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .sample-question {
+        cursor: pointer;
+        padding: 8px 12px;
+        margin-bottom: 5px;
+        background-color: #f0f4f8;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+    
+    .sample-question:hover {
+        background-color: #e1f5fe;
+    }
+</style>
+{% endblock %}
