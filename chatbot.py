@@ -89,39 +89,42 @@ class ExamSeekChatbot:
             
             # Check for greetings
             if any(word in message_lower for word in ["hello", "hi", "hey", "greetings", "namaste"]):
+                greeting_responses = self.common_questions.get("greeting", ["Hello! How can I help you?"])
                 return {
-                    "text": random.choice(self.common_questions["greeting"]),
+                    "text": random.choice(greeting_responses),
                     "status": "success"
                 }
                 
             # Check for thanks
             if any(word in message_lower for word in ["thank", "thanks", "appreciate", "helpful"]):
+                thanks_responses = self.common_questions.get("thanks", ["You're welcome!"])
                 return {
-                    "text": random.choice(self.common_questions["thanks"]),
+                    "text": random.choice(thanks_responses),
                     "status": "success"
                 }
                 
             # Check for goodbyes
             if any(word in message_lower for word in ["bye", "goodbye", "see you", "farewell"]):
+                bye_responses = self.common_questions.get("bye", ["Goodbye! All the best!"])
                 return {
-                    "text": random.choice(self.common_questions["bye"]),
+                    "text": random.choice(bye_responses),
                     "status": "success"
                 }
                 
             # Check for help request
             if any(word in message_lower for word in ["help", "assist", "what can you do", "capabilities"]):
                 return {
-                    "text": self.common_questions["capabilities"],
+                    "text": self.common_questions.get("capabilities", "I can help you with information about various Indian exams, eligibility criteria, application procedures, and more."),
                     "status": "success"
                 }
                 
             # Check for exam category information
             for category in self.exam_categories:
-                category_name = category["name"].lower()
-                if category_name in message_lower or category["id"] in message_lower:
-                    subcategories = ", ".join([subcat["name"] for subcat in category["subcategories"]]) if category["subcategories"] else "No subcategories available"
-                    response = f"**{category['name']}**: {category['description']}\n\n"
-                    response += f"**Subcategories**: {subcategories}\n\n"
+                category_name = category.get("name", "").lower()
+                category_id = category.get("id", "").lower()
+                if category_name in message_lower or category_id in message_lower:
+                    response = f"**{category.get('name', '')}**: {category.get('description', '')}\n\n"
+                    # No subcategories information as per requirements
                     response += "You can ask me about specific exams in this category!"
                     return {
                         "text": response,
@@ -130,49 +133,53 @@ class ExamSeekChatbot:
                 
             # Check for specific exam information
             for exam in self.exams_data:
-                exam_name_lower = exam["name"].lower()
-                exam_full_name_lower = exam["full_name"].lower()
+                exam_name_lower = exam.get("name", "").lower()
+                exam_full_name_lower = exam.get("full_name", "").lower()
                 
                 if exam_name_lower in message_lower or exam_full_name_lower in message_lower:
                     # Looking for specific aspects
                     if "eligibility" in message_lower:
                         return {
-                            "text": f"**Eligibility for {exam['name']}**: {exam['eligibility']}",
+                            "text": f"**Eligibility for {exam.get('name', '')}**: {exam.get('eligibility', 'Information not available')}",
                             "status": "success"
                         }
                     elif "pattern" in message_lower or "structure" in message_lower:
                         return {
-                            "text": f"**Exam Pattern for {exam['name']}**: {exam['exam_pattern']}",
+                            "text": f"**Exam Pattern for {exam.get('name', '')}**: {exam.get('exam_pattern', 'Information not available')}",
                             "status": "success"
                         }
                     elif "syllabus" in message_lower or "curriculum" in message_lower:
                         return {
-                            "text": f"**Syllabus for {exam['name']}**: {exam['syllabus']}",
+                            "text": f"**Syllabus for {exam.get('name', '')}**: {exam.get('syllabus', 'Information not available')}",
                             "status": "success"
                         }
                     elif "application" in message_lower or "apply" in message_lower or "registration" in message_lower:
                         return {
-                            "text": f"**Application Procedure for {exam['name']}**: {exam['application_procedure']}",
+                            "text": f"**Application Procedure for {exam.get('name', '')}**: {exam.get('application_procedure', 'Information not available')}",
                             "status": "success"
                         }
                     elif "date" in message_lower or "schedule" in message_lower or "when" in message_lower:
-                        dates_info = "\n".join([f"- **{key.replace('_', ' ').title()}**: {value}" for key, value in exam["important_dates"].items()])
+                        important_dates = exam.get("important_dates", {})
+                        dates_info = "\n".join([f"- **{key.replace('_', ' ').title()}**: {value}" for key, value in important_dates.items()])
+                        if not dates_info:
+                            dates_info = "Information not available"
                         return {
-                            "text": f"**Important Dates for {exam['name']}**:\n{dates_info}",
+                            "text": f"**Important Dates for {exam.get('name', '')}**:\n{dates_info}",
                             "status": "success"
                         }
                     elif "tip" in message_lower or "advice" in message_lower or "prepare" in message_lower or "suggestion" in message_lower:
-                        tips = "\n".join([f"- {tip}" for tip in exam["preparation_tips"]]) if "preparation_tips" in exam else "No specific tips available for this exam."
+                        preparation_tips = exam.get("preparation_tips", [])
+                        tips = "\n".join([f"- {tip}" for tip in preparation_tips]) if preparation_tips else "No specific tips available for this exam."
                         return {
-                            "text": f"**Preparation Tips for {exam['name']}**:\n{tips}",
+                            "text": f"**Preparation Tips for {exam.get('name', '')}**:\n{tips}",
                             "status": "success"
                         }
                     else:
                         # General overview
-                        response = f"**{exam['full_name']} ({exam['name']})**\n\n"
-                        response += f"{exam['description']}\n\n"
-                        response += f"**Conducted by**: {exam['conducting_body']}\n"
-                        response += f"**Frequency**: {exam['frequency']}\n\n"
+                        response = f"**{exam.get('full_name', '')} ({exam.get('name', '')})**\n\n"
+                        response += f"{exam.get('description', '')}\n\n"
+                        response += f"**Conducted by**: {exam.get('conducting_body', 'Information not available')}\n"
+                        response += f"**Frequency**: {exam.get('frequency', 'Information not available')}\n\n"
                         response += "You can ask me more specific questions about eligibility, exam pattern, syllabus, application procedure, or important dates for this exam!"
                         return {
                             "text": response,
@@ -189,14 +196,16 @@ class ExamSeekChatbot:
                     ("banking", ["bank", "sbi", "rbi", "finance"])
                 ]:
                     if any(term in message_lower for term in category_name):
-                        tips = "\n".join([f"- {tip}" for tip in self.exam_tips[category_key]])
+                        tips_list = self.exam_tips.get(category_key, [])
+                        tips = "\n".join([f"- {tip}" for tip in tips_list]) if tips_list else "No specific tips available for this category."
                         return {
                             "text": f"**Preparation Tips for {category_key.title()} Exams**:\n{tips}",
                             "status": "success"
                         }
                 
                 # General tips if no specific category found
-                tips = "\n".join([f"- {tip}" for tip in self.exam_tips["general"]])
+                tips_list = self.exam_tips.get("general", [])
+                tips = "\n".join([f"- {tip}" for tip in tips_list]) if tips_list else "No general tips available."
                 return {
                     "text": f"**General Exam Preparation Tips**:\n{tips}",
                     "status": "success"
