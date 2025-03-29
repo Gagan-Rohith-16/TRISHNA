@@ -64,7 +64,12 @@ EXAM_CATEGORIES = [
         "name": "State PSC Exams",
         "description": "Civil Services examinations conducted by State Public Service Commissions",
         "icon_class": "fa-university",
-        "subcategories": []
+        "subcategories": [
+            {"id": "psc_north", "name": "North Indian States"},
+            {"id": "psc_south", "name": "South Indian States"},
+            {"id": "psc_east", "name": "East Indian States"},
+            {"id": "psc_west", "name": "West Indian States"}
+        ]
     },
     {
         "id": "banking",
@@ -346,6 +351,362 @@ EXAMS_DATA = [
             "Practice mathematics regularly",
             "Improve English communication skills",
             "Prepare for physical fitness tests"
+        ]
+    },
+    # MANAGEMENT ENTRANCE EXAMS
+    {
+        "id": "cat",
+        "name": "CAT",
+        "full_name": "Common Admission Test",
+        "category": "management",
+        "subcategory": "mba_national",
+        "description": "CAT is the most popular MBA entrance exam in India, conducted for admission to the prestigious Indian Institutes of Management (IIMs) and many other top B-schools.",
+        "conducting_body": "Indian Institutes of Management (IIMs) on a rotational basis",
+        "frequency": "Once a year",
+        "eligibility": "Graduates in any discipline with at least 50% marks (45% for reserved categories).",
+        "age_limit": "No specific age limit",
+        "exam_pattern": "Computer-Based Test (CBT) with three sections: Verbal Ability & Reading Comprehension (VARC), Data Interpretation & Logical Reasoning (DILR), and Quantitative Ability (QA). Duration is 2 hours.",
+        "syllabus": "VARC: Reading Comprehension, Verbal Reasoning, Verbal Ability. DILR: Data Interpretation, Logical Reasoning. QA: Arithmetic, Algebra, Geometry, Trigonometry, Modern Math.",
+        "application_procedure": "Online application through the official CAT website. Registration typically opens in August.",
+        "important_dates": {
+            "application_start": "Generally in August",
+            "application_end": "Generally in September",
+            "exam_date": "Generally in November",
+            "result_date": "Generally in January"
+        },
+        "website": "https://iimcat.ac.in/",
+        "preparation_tips": [
+            "Practice time management rigorously",
+            "Focus on accuracy over speed initially",
+            "Take regular mock tests under timed conditions",
+            "Analyze performance to identify weak areas",
+            "Learn shortcuts and techniques for quick calculations"
+        ]
+    },
+    {
+        "id": "xat",
+        "name": "XAT",
+        "full_name": "Xavier Aptitude Test",
+        "category": "management",
+        "subcategory": "mba_national",
+        "description": "XAT is conducted by XLRI Jamshedpur for admission to management programs at XLRI and other associated Xavier institutions.",
+        "conducting_body": "Xavier Labour Relations Institute (XLRI), Jamshedpur",
+        "frequency": "Once a year",
+        "eligibility": "Graduates in any discipline with minimum three years of bachelor's degree.",
+        "age_limit": "No specific age limit",
+        "exam_pattern": "Computer-Based Test with sections on Verbal and Logical Ability, Decision Making, Quantitative Ability and Data Interpretation, and General Knowledge. Duration is 3 hours.",
+        "syllabus": "Verbal and Logical Ability, Decision Making, Quantitative Ability, Data Interpretation, and General Knowledge.",
+        "application_procedure": "Online application through the official XAT website. Registration typically opens in August.",
+        "important_dates": {
+            "application_start": "Generally in August",
+            "application_end": "Generally in November",
+            "exam_date": "Generally in January",
+            "result_date": "Generally in January-February"
+        },
+        "website": "https://www.xatonline.in/",
+        "preparation_tips": [
+            "Focus on unique sections like Decision Making",
+            "Develop strong reasoning and analytical skills",
+            "Improve general knowledge and current affairs",
+            "Practice time management for each section",
+            "Take XAT specific mock tests"
+        ]
+    },
+    # LAW ENTRANCE EXAMS
+    {
+        "id": "clat",
+        "name": "CLAT",
+        "full_name": "Common Law Admission Test",
+        "category": "law",
+        "subcategory": "law_national",
+        "description": "CLAT is a centralized national level entrance test for admissions to undergraduate and postgraduate programs in 22 National Law Universities in India.",
+        "conducting_body": "Consortium of National Law Universities",
+        "frequency": "Once a year",
+        "eligibility": "For UG: 10+2 with minimum 45% marks (40% for reserved categories). For PG: LLB degree with minimum 55% marks (50% for reserved categories).",
+        "age_limit": "No specific upper age limit",
+        "exam_pattern": "For UG: English Language, Current Affairs, Legal Reasoning, Logical Reasoning, and Quantitative Techniques. For PG: Constitutional Law, Jurisprudence, and other law subjects. Duration is 2 hours.",
+        "syllabus": "For UG: English Language, Current Affairs, Legal Reasoning, Logical Reasoning, and Quantitative Techniques. For PG: Constitutional Law, Jurisprudence, and other law subjects.",
+        "application_procedure": "Online application through the official CLAT website. Registration typically opens in January.",
+        "important_dates": {
+            "application_start": "Generally in January",
+            "application_end": "Generally in March",
+            "exam_date": "Generally in May",
+            "result_date": "Generally in June"
+        },
+        "website": "https://consortiumofnlus.ac.in/",
+        "preparation_tips": [
+            "Read newspapers daily for current affairs",
+            "Improve English comprehension and vocabulary",
+            "Practice logical reasoning puzzles regularly",
+            "Develop basic mathematics and quantitative aptitude",
+            "Take mock tests to improve time management"
+        ]
+    },
+    {
+        "id": "ailet",
+        "name": "AILET",
+        "full_name": "All India Law Entrance Test",
+        "category": "law",
+        "subcategory": "law_national",
+        "description": "AILET is conducted by National Law University, Delhi for admission to its undergraduate and postgraduate law programs.",
+        "conducting_body": "National Law University, Delhi",
+        "frequency": "Once a year",
+        "eligibility": "For UG: 10+2 with minimum 50% marks (45% for reserved categories). For PG: LLB degree with minimum 55% marks (50% for reserved categories).",
+        "age_limit": "No specific upper age limit",
+        "exam_pattern": "For UG: English, General Knowledge & Current Affairs, Legal Aptitude, Reasoning, and Elementary Mathematics. For PG: Various law subjects. Duration is 1.5 hours.",
+        "syllabus": "For UG: English, General Knowledge & Current Affairs, Legal Aptitude, Reasoning, and Elementary Mathematics. For PG: Constitutional Law, Jurisprudence, and other law subjects.",
+        "application_procedure": "Online application through the official NLU Delhi website. Registration typically opens in January.",
+        "important_dates": {
+            "application_start": "Generally in January",
+            "application_end": "Generally in April",
+            "exam_date": "Generally in May",
+            "result_date": "Generally in June"
+        },
+        "website": "https://nationallawuniversitydelhi.in/",
+        "preparation_tips": [
+            "Develop strong reading and comprehension skills",
+            "Stay updated with legal current affairs",
+            "Practice legal reasoning questions",
+            "Build strong logical and analytical thinking",
+            "Take regular mock tests"
+        ]
+    },
+    # STATE PSC EXAMS
+    {
+        "id": "upsc_psc",
+        "name": "UPPSC",
+        "full_name": "Uttar Pradesh Public Service Commission",
+        "category": "state_psc",
+        "subcategory": "psc_north",
+        "description": "UPPSC conducts various examinations for recruitment to civil services posts in the state of Uttar Pradesh.",
+        "conducting_body": "Uttar Pradesh Public Service Commission",
+        "frequency": "Once a year",
+        "eligibility": "Graduates in any discipline. Age limit and other criteria vary for different posts.",
+        "age_limit": "21-40 years (with relaxations for reserved categories)",
+        "exam_pattern": "Preliminary Exam (Objective), Main Exam (Descriptive), and Interview. Duration varies for different stages.",
+        "syllabus": "General Studies, Current Affairs, Indian History, Indian Polity, Indian Economy, Geography, Science & Technology, etc.",
+        "application_procedure": "Online application through the official UPPSC website.",
+        "important_dates": {
+            "application_start": "Varies each year",
+            "application_end": "Varies each year",
+            "prelims_exam_date": "Varies each year",
+            "mains_exam_date": "Varies each year",
+            "interview_date": "Varies each year",
+            "final_result_date": "Varies each year"
+        },
+        "website": "https://uppsc.up.nic.in/",
+        "preparation_tips": [
+            "Focus on state-specific topics along with general studies",
+            "Stay updated with state current affairs",
+            "Practice previous years' papers",
+            "Develop answer writing skills for mains",
+            "Prepare notes on important topics"
+        ]
+    },
+    {
+        "id": "mpsc",
+        "name": "MPSC",
+        "full_name": "Maharashtra Public Service Commission",
+        "category": "state_psc",
+        "subcategory": "psc_west",
+        "description": "MPSC conducts various examinations for recruitment to civil services posts in the state of Maharashtra.",
+        "conducting_body": "Maharashtra Public Service Commission",
+        "frequency": "Once a year",
+        "eligibility": "Graduates in any discipline. Age limit and other criteria vary for different posts.",
+        "age_limit": "19-38 years (with relaxations for reserved categories)",
+        "exam_pattern": "Preliminary Exam (Objective), Main Exam (Descriptive), and Interview. Duration varies for different stages.",
+        "syllabus": "General Studies, Maharashtra-specific current affairs, Indian History, Indian Polity, Indian Economy, Geography, Science & Technology, etc.",
+        "application_procedure": "Online application through the official MPSC website.",
+        "important_dates": {
+            "application_start": "Varies each year",
+            "application_end": "Varies each year",
+            "prelims_exam_date": "Varies each year",
+            "mains_exam_date": "Varies each year",
+            "interview_date": "Varies each year",
+            "final_result_date": "Varies each year"
+        },
+        "website": "https://mpsc.gov.in/",
+        "preparation_tips": [
+            "Focus on Maharashtra-specific topics along with general studies",
+            "Stay updated with state current affairs",
+            "Practice previous years' papers",
+            "Develop answer writing skills for mains",
+            "Focus on Marathi language preparation as needed"
+        ]
+    },
+    # RAILWAYS EXAMS
+    {
+        "id": "rrb_ntpc",
+        "name": "RRB NTPC",
+        "full_name": "Railway Recruitment Board Non-Technical Popular Categories",
+        "category": "railways",
+        "subcategory": "rrb_ntpc",
+        "description": "RRB NTPC is conducted for recruitment to various non-technical posts in Indian Railways such as Station Master, Commercial Clerk, etc.",
+        "conducting_body": "Railway Recruitment Board (RRB)",
+        "frequency": "As per vacancy",
+        "eligibility": "Graduates/Undergraduates depending on the post.",
+        "age_limit": "18-33 years (with relaxations for reserved categories)",
+        "exam_pattern": "Computer-Based Test (CBT) in two stages, followed by Skill Test and Document Verification. Duration of CBT is 90-120 minutes.",
+        "syllabus": "General Awareness, Mathematics, General Intelligence & Reasoning, and General Science.",
+        "application_procedure": "Online application through the official RRB website when notification is released.",
+        "important_dates": {
+            "application_start": "As per notification",
+            "application_end": "Usually 30 days from notification",
+            "exam_date": "As per RRB schedule",
+            "result_date": "As per RRB schedule"
+        },
+        "website": "https://www.rrbonlinereg.gov.in/",
+        "preparation_tips": [
+            "Focus on speed and accuracy in solving questions",
+            "Practice quantitative aptitude and reasoning daily",
+            "Stay updated with current affairs related to railways",
+            "Attempt previous years' papers",
+            "Take mock tests regularly"
+        ]
+    },
+    {
+        "id": "rrb_group_d",
+        "name": "RRB Group D",
+        "full_name": "Railway Recruitment Board Group D",
+        "category": "railways",
+        "subcategory": "rrb_group_d",
+        "description": "RRB Group D is conducted for recruitment to Level 1 posts like Track Maintainer, Helper, etc., in Indian Railways.",
+        "conducting_body": "Railway Recruitment Board (RRB)",
+        "frequency": "As per vacancy",
+        "eligibility": "10th pass or ITI from institutions recognized by NCVT/SCVT or equivalent.",
+        "age_limit": "18-33 years (with relaxations for reserved categories)",
+        "exam_pattern": "Computer-Based Test (CBT), Physical Efficiency Test (PET), Document Verification, and Medical Examination. Duration of CBT is 90 minutes.",
+        "syllabus": "General Science, Mathematics, General Intelligence & Reasoning, and General Awareness & Current Affairs.",
+        "application_procedure": "Online application through the official RRB website when notification is released.",
+        "important_dates": {
+            "application_start": "As per notification",
+            "application_end": "Usually 30 days from notification",
+            "exam_date": "As per RRB schedule",
+            "result_date": "As per RRB schedule"
+        },
+        "website": "https://www.rrbonlinereg.gov.in/",
+        "preparation_tips": [
+            "Focus on fundamentals of all subjects",
+            "Practice numerical ability and reasoning regularly",
+            "Prepare for physical efficiency test",
+            "Stay updated with railway current affairs",
+            "Take regular mock tests"
+        ]
+    },
+    # TEACHING EXAMS
+    {
+        "id": "ugc_net",
+        "name": "UGC NET",
+        "full_name": "University Grants Commission National Eligibility Test",
+        "category": "teaching",
+        "subcategory": "teach_net",
+        "description": "UGC NET is conducted to determine eligibility for Assistant Professor and Junior Research Fellowship (JRF) in Indian universities and colleges.",
+        "conducting_body": "National Testing Agency (NTA)",
+        "frequency": "Twice a year (June and December sessions)",
+        "eligibility": "Master's degree with minimum 55% marks (50% for reserved categories).",
+        "age_limit": "No upper age limit for Assistant Professor. For JRF, upper age limit is 30 years (relaxation for reserved categories).",
+        "exam_pattern": "Computer-Based Test (CBT) with two papers. Paper 1: Teaching Aptitude. Paper 2: Subject-specific. Duration is 3 hours.",
+        "syllabus": "Paper 1: Teaching Aptitude, Research Aptitude, Reading Comprehension, etc. Paper 2: Subject-specific syllabus.",
+        "application_procedure": "Online application through the NTA website. Registration typically opens 2-3 months before the exam.",
+        "important_dates": {
+            "application_start": "Generally in February (for June session) and August (for December session)",
+            "application_end": "Generally in March (for June session) and September (for December session)",
+            "exam_date": "Generally in June and December",
+            "result_date": "Generally within 30-45 days after the exam"
+        },
+        "website": "https://ugcnet.nta.nic.in/",
+        "preparation_tips": [
+            "Focus on subject-specific knowledge for Paper 2",
+            "Understand teaching and research methodologies for Paper 1",
+            "Practice previous years' papers",
+            "Make concise notes for quick revision",
+            "Take timed mock tests"
+        ]
+    },
+    {
+        "id": "ctet",
+        "name": "CTET",
+        "full_name": "Central Teacher Eligibility Test",
+        "category": "teaching",
+        "subcategory": "teach_tet",
+        "description": "CTET is conducted for determining the eligibility of teachers for Classes I to VIII in schools under the Central Government.",
+        "conducting_body": "Central Board of Secondary Education (CBSE)",
+        "frequency": "Twice a year",
+        "eligibility": "For Paper 1 (Classes I-V): Senior Secondary/Intermediate with 50% marks or Bachelor's Degree, or 2-year Diploma in Elementary Education. For Paper 2 (Classes VI-VIII): Bachelor's Degree with 50% marks and B.Ed, or similar qualifications.",
+        "age_limit": "No specific age limit",
+        "exam_pattern": "Paper 1 (for Primary Teachers) and Paper 2 (for Upper Primary Teachers). Both papers are objective type with 150 MCQs each. Duration is 2.5 hours for each paper.",
+        "syllabus": "Paper 1: Child Development & Pedagogy, Language I, Language II, Mathematics, Environmental Studies. Paper 2: Child Development & Pedagogy, Language I, Language II, Mathematics & Science OR Social Studies.",
+        "application_procedure": "Online application through the CTET website. Registration opens approximately 2 months before the exam.",
+        "important_dates": {
+            "application_start": "Approximately 2 months before the exam",
+            "application_end": "Approximately 1.5 months before the exam",
+            "exam_date": "Generally in July and December",
+            "result_date": "Generally within 1-2 months after the exam"
+        },
+        "website": "https://ctet.nic.in/",
+        "preparation_tips": [
+            "Understand child psychology and development concepts",
+            "Focus on teaching methodologies and approaches",
+            "Practice solving objective-type questions",
+            "Stay updated with the latest educational policies",
+            "Take regular mock tests"
+        ]
+    },
+    # STUDY ABROAD EXAMS
+    {
+        "id": "gre",
+        "name": "GRE",
+        "full_name": "Graduate Record Examination",
+        "category": "abroad",
+        "subcategory": "abroad_general",
+        "description": "GRE is a standardized test required for admission to graduate schools and business schools in the United States and other countries.",
+        "conducting_body": "Educational Testing Service (ETS)",
+        "frequency": "Throughout the year",
+        "eligibility": "No specific eligibility criteria. Anyone can appear for the GRE.",
+        "age_limit": "No specific age limit",
+        "exam_pattern": "Computer-adaptive test with sections on Verbal Reasoning, Quantitative Reasoning, and Analytical Writing. Duration is approximately 3 hours and 45 minutes.",
+        "syllabus": "Verbal Reasoning: Reading Comprehension, Text Completion, Sentence Equivalence. Quantitative Reasoning: Arithmetic, Algebra, Geometry, Data Analysis. Analytical Writing: Analysis of an Issue, Analysis of an Argument.",
+        "application_procedure": "Register online through the ETS GRE website. Choose a test center and date according to availability.",
+        "important_dates": {
+            "application": "Open throughout the year",
+            "exam_date": "Available throughout the year on multiple dates",
+            "result_date": "10-15 days after the exam"
+        },
+        "website": "https://www.ets.org/gre",
+        "preparation_tips": [
+            "Build strong vocabulary for verbal reasoning",
+            "Review fundamental math concepts for quantitative reasoning",
+            "Practice essay writing for analytical writing section",
+            "Take timed practice tests",
+            "Use official GRE preparation materials"
+        ]
+    },
+    {
+        "id": "toefl",
+        "name": "TOEFL",
+        "full_name": "Test of English as a Foreign Language",
+        "category": "abroad",
+        "subcategory": "abroad_general",
+        "description": "TOEFL is a standardized test to measure the English language ability of non-native speakers wishing to enroll in English-speaking universities.",
+        "conducting_body": "Educational Testing Service (ETS)",
+        "frequency": "Throughout the year",
+        "eligibility": "No specific eligibility criteria. Anyone can appear for the TOEFL.",
+        "age_limit": "No specific age limit",
+        "exam_pattern": "Internet-based test (iBT) with sections on Reading, Listening, Speaking, and Writing. Duration is approximately 3 hours.",
+        "syllabus": "Reading: Academic reading passages. Listening: Academic lectures and conversations. Speaking: Express opinions on familiar topics and academic materials. Writing: Write essay responses and summaries of academic content.",
+        "application_procedure": "Register online through the ETS TOEFL website. Choose a test center and date according to availability.",
+        "important_dates": {
+            "application": "Open throughout the year",
+            "exam_date": "Available throughout the year on multiple dates",
+            "result_date": "Approximately 10 days after the exam"
+        },
+        "website": "https://www.ets.org/toefl",
+        "preparation_tips": [
+            "Practice reading academic articles",
+            "Improve listening skills with academic lectures",
+            "Develop speaking skills through regular practice",
+            "Practice writing essays on various topics",
+            "Take full-length practice tests"
         ]
     }
 ]
