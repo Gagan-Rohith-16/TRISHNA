@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="exam-header">
+    <div class="container">
+        <h1 class="exam-title">{{ category.name }}</h1>
+        <p class="exam-subtitle">{{ category.description }}</p>
+    </div>
+</section>
+
+<section class="container">
+    <!-- Subcategories Navigation -->
+    {% if category.subcategories %}
+    <div class="subcategories-nav">
+        <h3>Subcategories</h3>
+        <div class="subcategory-buttons">
+            <a href="{{ url_for('exam_category', category_id=category.id) }}" class="btn {% if not subcategory %}btn-primary{% else %}btn-secondary{% endif %}">All</a>
+            {% for subcat in category.subcategories %}
+            <a href="{{ url_for('exam_category', category_id=category.id, subcategory=subcat.id) }}" class="btn {% if subcategory == subcat.id %}btn-primary{% else %}btn-secondary{% endif %}">{{ subcat.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Exams List -->
+    <div class="exams-list">
+        <h2>Available Exams</h2>
+        {% if exams %}
+        <div class="category-cards">
+            {% for exam in exams %}
+            <div class="card">
+                <h3 class="card-title">{{ exam.name }}</h3>
+                <div class="card-body">
+                    <p>{{ exam.description }}</p>
+                    <div class="exam-meta">
+                        <div class="exam-meta-item">
+                            <strong>Conducting Body:</strong> {{ exam.conducting_body }}
+                        </div>
+                        <div class="exam-meta-item">
+                            <strong>Frequency:</strong> {{ exam.frequency }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('exam_detail', exam_id=exam.id) }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-exams-message">
+            <p>No exams found for this category{% if subcategory %} and subcategory{% endif %}.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Related Images Section -->
+<section class="container related-images-section">
+    <h2>Prepare for Success</h2>
+    <div class="image-grid">
+        {% if category.id == 'engineering' %}
+        <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1515279831895-4a03671e5edf')"></div>
+        <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1473526750398-bfd02f485230')"></div>
+        {% elif category.id == 'medical' %}
+        <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1532679473578-37c3d5c525a7')"></div>
+        <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1530025809667-1f4bcff8e60f')"></div>
+        {% elif category.id == 'upsc' or category.id == 'ssc' or category.id == 'banking' %}
+        <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1540908390241-82158ab62887')"></div>
+        <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1532907569410-e2b1be14a45b')"></div>
+        {% else %}
+        <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d')"></div>
+        <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1516979187457-637abb4f9353')"></div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Related Categories Section -->
+<section class="container">
+    <h2>Explore Related Categories</h2>
+    <div class="related-categories">
+        {% for related_category in categories if related_category.id != category.id %}
+        {% if loop.index <= 3 %}
+        <div class="related-category-item">
+            <div class="category-icon">
+                <i class="fas {{ related_category.icon_class }}"></i>
+            </div>
+            <div class="category-content">
+                <h3>{{ related_category.name }}</h3>
+                <p>{{ related_category.description }}</p>
+                <a href="{{ url_for('exam_category', category_id=related_category.id) }}" class="btn btn-secondary">View Category</a>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

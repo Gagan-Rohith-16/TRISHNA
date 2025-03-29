@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container hero-content">
+        <h1>Your One-Stop Portal for Indian Public Exams</h1>
+        <p>Get comprehensive information on notifications, eligibility, syllabus, important dates, and application procedures for all public exams in India.</p>
+        {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('register') }}" class="hero-btn">Create an Account</a>
+        {% else %}
+        <a href="#exam-categories" class="hero-btn">Explore Exams</a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Featured Images Section -->
+<section class="container">
+    <div class="featured-images">
+        <div class="image-grid">
+            <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6')"></div>
+            <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1519452575417-564c1401ecc0')"></div>
+            <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b')"></div>
+            <div class="image-item" style="background-image: url('https://images.unsplash.com/photo-1514369118554-e20d93546b30')"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Exam Categories Section -->
+<section class="container" id="exam-categories">
+    <h2>Exam Categories</h2>
+    <div class="category-cards">
+        {% for category in categories %}
+        <div class="card category-card">
+            <div class="category-card-header">
+                <div class="category-icon">
+                    <i class="fas {{ category.icon_class }}"></i>
+                </div>
+                <h3 class="category-card-title">{{ category.name }}</h3>
+            </div>
+            <div class="category-card-body">
+                <p>{{ category.description }}</p>
+                
+                {% if category.subcategories %}
+                <h4>Subcategories:</h4>
+                <ul>
+                    {% for subcategory in category.subcategories %}
+                    <li>{{ subcategory.name }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('exam_category', category_id=category.id) }}" class="btn btn-primary">View Exams</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="container">
+    <div class="statistics-section">
+        <h2>Helping Students Succeed</h2>
+        <div class="statistics-grid">
+            <div class="statistic-item">
+                <div class="statistic-number">100+</div>
+                <div class="statistic-label">Exams Covered</div>
+            </div>
+            <div class="statistic-item">
+                <div class="statistic-number">10,000+</div>
+                <div class="statistic-label">Happy Users</div>
+            </div>
+            <div class="statistic-item">
+                <div class="statistic-number">50+</div>
+                <div class="statistic-label">Government Agencies</div>
+            </div>
+            <div class="statistic-item">
+                <div class="statistic-number">24/7</div>
+                <div class="statistic-label">AI Support</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Exams Section -->
+<section class="container">
+    <h2>Featured Exams</h2>
+    <div class="featured-exams">
+        <div class="card">
+            <h3 class="card-title">UPSC Civil Services</h3>
+            <div class="card-body">
+                <p>The Civil Services Examination is conducted by UPSC for recruitment to various Civil Services of the Government of India, including IAS, IPS, and IFS.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('exam_detail', exam_id='upsc_cse') }}" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 class="card-title">JEE Main</h3>
+            <div class="card-body">
+                <p>JEE Main is the national level undergraduate engineering entrance exam conducted for admission to NITs, IIITs, CFTIs and other engineering institutions.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('exam_detail', exam_id='jee_main') }}" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 class="card-title">NEET UG</h3>
+            <div class="card-body">
+                <p>NEET UG is the single entrance examination for admission to MBBS, BDS, AYUSH, and other medical courses in India.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('exam_detail', exam_id='neet_ug') }}" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="container">
+    <h2>What Our Users Say</h2>
+    <div class="testimonials">
+        <div class="testimonial">
+            <div class="testimonial-content">
+                <p>"ExamSeek helped me find all the details I needed for my UPSC preparation. The comprehensive information and easy navigation made my preparation journey much smoother."</p>
+            </div>
+            <div class="testimonial-author">
+                <div class="author-name">Rahul Sharma</div>
+                <div class="author-title">UPSC Aspirant</div>
+            </div>
+        </div>
+        
+        <div class="testimonial">
+            <div class="testimonial-content">
+                <p>"I was confused about which entrance exam to take after my 12th. ExamSeek provided me with detailed information about all the available options, helping me make an informed decision."</p>
+            </div>
+            <div class="testimonial-author">
+                <div class="author-name">Priya Patel</div>
+                <div class="author-title">Medical Student</div>
+            </div>
+        </div>
+        
+        <div class="testimonial">
+            <div class="testimonial-content">
+                <p>"The AI assistant is amazing! It answered all my questions about exam patterns and eligibility criteria instantly. Highly recommend this portal to all exam aspirants."</p>
+            </div>
+            <div class="testimonial-author">
+                <div class="author-name">Amit Verma</div>
+                <div class="author-title">Banking Aspirant</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

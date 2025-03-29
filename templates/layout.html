@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if title %}{{ title }} - {% endif %}ExamSeek | Comprehensive Exam Portal</title>
+    <meta name="description" content="A comprehensive portal for Indian public exams, providing information on notifications, eligibility, syllabus, important dates, and application procedures.">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231A237E'%3E%3Cpath d='M12 2L2 6v12l10 4 10-4V6l-10-4zm0 2.6l6 2.4-6 2.4-6-2.4 6-2.4zm0 15.8l-7-2.8V9.4l7 2.8v8.2zm9-2.8l-7 2.8v-8.2l7-2.8v8.2z'/%3E%3C/svg%3E">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="{{ url_for('home') }}" class="logo">ExamSeek</a>
+            
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+    
+    <!-- Search Bar -->
+    <div class="container">
+        <form class="search-form" method="GET" action="{{ url_for('search') }}">
+            {{ search_form.csrf_token }}
+            {{ search_form.query(class="form-control", placeholder="Search for exams...") }}
+            <button type="submit" class="btn-search">Search</button>
+        </form>
+    </div>
+    
+    <!-- Alerts Container -->
+    <div class="container" id="alert-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Why Use Our Portal Section -->
+    <section class="why-use-portal">
+        <div class="container">
+            <h2>Why Use Our Portal</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="benefit-title">Comprehensive Information</h3>
+                    <p class="benefit-description">Access detailed information about all public exams in India in one place.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3 class="benefit-title">Up-to-Date Content</h3>
+                    <p class="benefit-description">Get the latest notifications, dates, and application procedures.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="benefit-title">Personalized Experience</h3>
+                    <p class="benefit-description">Create an account to save exams and receive notifications.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="benefit-title">AI Assistant</h3>
+                    <p class="benefit-description">Get instant answers to your exam-related queries with our AI chatbot.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h4>ExamSeek</h4>
+                <p>Your comprehensive portal for Indian public exam information. We simplify your preparation journey by providing all the information you need in one place.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container footer-bottom">
+            <p>&copy; 2023 ExamSeek. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-toggle">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+        
+        <div class="chatbot-box">
+            <div class="chatbot-header">
+                <h3>ExamSeek Assistant</h3>
+                <button class="close-chatbot">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="chatbot-messages">
+                <!-- Messages will be inserted here dynamically -->
+            </div>
+            
+            <div class="chatbot-input">
+                <input type="text" placeholder="Ask a question...">
+                <button><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+</body>
+</html>
