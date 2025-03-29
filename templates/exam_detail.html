@@ -17,102 +17,120 @@
 </section>
 
 <section class="container exam-detail-section">
-    <div class="exam-section">
-        <h2 class="exam-section-title">Overview</h2>
-        <p>{{ exam.description }}</p>
-        
-        <div class="key-info-grid">
-            <div class="key-info-item">
-                <div class="key-info-label">Conducting Body</div>
-                <div class="key-info-value">{{ exam.conducting_body }}</div>
+    <div class="exam-detail-layout">
+        <!-- Left sidebar with important dates -->
+        <div class="exam-dates-sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Important Dates</h3>
+                <div class="important-dates-timeline">
+                    {% for event, date in exam.important_dates.items() %}
+                    <div class="timeline-item">
+                        <div class="timeline-date">{{ date }}</div>
+                        <div class="timeline-event">{{ event|replace('_', ' ')|title }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
             
-            <div class="key-info-item">
-                <div class="key-info-label">Frequency</div>
-                <div class="key-info-value">{{ exam.frequency }}</div>
-            </div>
-            
-            <div class="key-info-item">
-                <div class="key-info-label">Age Limit</div>
-                <div class="key-info-value">{{ exam.age_limit }}</div>
-            </div>
-            
-            <div class="key-info-item">
-                <div class="key-info-label">Official Website</div>
-                <div class="key-info-value">
-                    <a href="{{ exam.website }}" target="_blank" rel="noopener noreferrer" class="official-link">🔗 Official Website</a>
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Quick Links</h3>
+                <div class="sidebar-links">
+                    <a href="{{ exam.website }}" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+                        <i class="fas fa-globe"></i> 🔗 Official Website
+                    </a>
+                    <a href="#exam-pattern" class="sidebar-link">
+                        <i class="fas fa-clipboard-list"></i> Exam Pattern
+                    </a>
+                    <a href="#syllabus" class="sidebar-link">
+                        <i class="fas fa-book"></i> Syllabus
+                    </a>
+                    <a href="#eligibility" class="sidebar-link">
+                        <i class="fas fa-user-check"></i> Eligibility
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="eligibility-criteria">
-        <h3>Eligibility Criteria</h3>
-        <p>{{ exam.eligibility }}</p>
-    </div>
-    
-    <div class="exam-pattern">
-        <h3>Exam Pattern</h3>
-        <p>{{ exam.exam_pattern }}</p>
-    </div>
-    
-    <div class="syllabus">
-        <h3>Syllabus</h3>
-        <p>{{ exam.syllabus }}</p>
-    </div>
-    
-    <div class="application-procedure">
-        <h3>Application Procedure</h3>
-        <p>{{ exam.application_procedure }}</p>
-    </div>
-    
-    <div class="exam-section">
-        <h2 class="exam-section-title">Important Dates</h2>
-        <table class="dates-table">
-            <thead>
-                <tr>
-                    <th>Event</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for event, date in exam.important_dates.items() %}
-                <tr>
-                    <td>{{ event|replace('_', ' ')|title }}</td>
-                    <td>{{ date }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    
-    {% if exam.preparation_tips %}
-    <div class="exam-section">
-        <h2 class="exam-section-title">Preparation Tips</h2>
-        <ul class="preparation-tips">
-            {% for tip in exam.preparation_tips %}
-            <li>{{ tip }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-    
-    <div class="exam-section">
-        <h2 class="exam-section-title">External Resources</h2>
-        <div class="external-resources">
-            <div class="resource-item">
-                <i class="fas fa-globe"></i>
-                <a href="{{ exam.website }}" target="_blank" rel="noopener noreferrer" class="official-link">🔗 Official Website</a>
+        
+        <!-- Main content area -->
+        <div class="exam-main-content">
+            <div class="exam-section">
+                <h2 class="exam-section-title">Overview</h2>
+                <p>{{ exam.description }}</p>
+                
+                <div class="key-info-grid">
+                    <div class="key-info-item">
+                        <div class="key-info-label">Conducting Body</div>
+                        <div class="key-info-value">{{ exam.conducting_body }}</div>
+                    </div>
+                    
+                    <div class="key-info-item">
+                        <div class="key-info-label">Frequency</div>
+                        <div class="key-info-value">{{ exam.frequency }}</div>
+                    </div>
+                    
+                    <div class="key-info-item">
+                        <div class="key-info-label">Age Limit</div>
+                        <div class="key-info-value">{{ exam.age_limit }}</div>
+                    </div>
+                    
+                    <div class="key-info-item">
+                        <div class="key-info-label">Official Website</div>
+                        <div class="key-info-value">
+                            <a href="{{ exam.website }}" target="_blank" rel="noopener noreferrer" class="official-link">🔗 Official Website</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="resource-item">
-                <i class="fas fa-file-pdf"></i>
-                <a href="{{ exam.website }}" target="_blank" rel="noopener noreferrer" class="official-link">📄 Official Notification</a>
+            <div id="eligibility" class="eligibility-criteria">
+                <h3>Eligibility Criteria</h3>
+                <p>{{ exam.eligibility }}</p>
             </div>
             
-            <div class="resource-item">
-                <i class="fas fa-question-circle"></i>
-                <a href="#" data-toggle="modal" data-target="chatbot-box">Ask Our AI Assistant</a>
+            <div id="exam-pattern" class="exam-pattern">
+                <h3>Exam Pattern</h3>
+                <p>{{ exam.exam_pattern }}</p>
+            </div>
+            
+            <div id="syllabus" class="syllabus">
+                <h3>Syllabus</h3>
+                <p>{{ exam.syllabus }}</p>
+            </div>
+            
+            <div class="application-procedure">
+                <h3>Application Procedure</h3>
+                <p>{{ exam.application_procedure }}</p>
+            </div>
+            
+            {% if exam.preparation_tips %}
+            <div class="exam-section">
+                <h2 class="exam-section-title">Preparation Tips</h2>
+                <ul class="preparation-tips">
+                    {% for tip in exam.preparation_tips %}
+                    <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <div class="exam-section">
+                <h2 class="exam-section-title">External Resources</h2>
+                <div class="external-resources">
+                    <div class="resource-item">
+                        <i class="fas fa-globe"></i>
+                        <a href="{{ exam.website }}" target="_blank" rel="noopener noreferrer" class="official-link">🔗 Official Website</a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <i class="fas fa-file-pdf"></i>
+                        <a href="{{ exam.website }}" target="_blank" rel="noopener noreferrer" class="official-link">📄 Official Notification</a>
+                    </div>
+                    
+                    <div class="resource-item">
+                        <i class="fas fa-question-circle"></i>
+                        <a href="#" data-toggle="modal" data-target="chatbot-box">Ask Our AI Assistant</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
