@@ -161,11 +161,8 @@ def register_routes(app):
     
     @app.route('/chatbot-page')
     def chatbot_page():
-        """Render the chatbot HTML page with exam data loaded for client-side processing"""
-        categories = EXAM_CATEGORIES
-        exams_data = EXAMS_DATA
-        return render_template('chatbot.html', title='ExamSeek Chatbot', 
-                              categories=categories, exams_data=exams_data)
+        """Render the dedicated chatbot page"""
+        return render_template('chatbot.html', title='ExamSeek Chatbot')
 
     @app.route('/chatbot', methods=['POST'])
     def chatbot_query():

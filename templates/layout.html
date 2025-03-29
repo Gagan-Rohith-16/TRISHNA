@@ -143,30 +143,33 @@
         </div>
     </footer>
     
-    <!-- Chatbot -->
-    <div class="chatbot-container">
-        <div class="chatbot-toggle">
-            <i class="fas fa-comment-dots"></i>
-        </div>
-        
-        <div class="chatbot-box">
-            <div class="chatbot-header">
-                <h3>ExamSeek Assistant</h3>
-                <button class="close-chatbot">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="chatbot-messages">
-                <!-- Messages will be inserted here dynamically -->
-            </div>
-            
-            <div class="chatbot-input">
-                <input type="text" placeholder="Ask a question...">
-                <button><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-    </div>
+    <!-- Dialogflow Chatbot Integration -->
+    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <df-messenger
+      project-id="financeflow-453019"
+      agent-id="7612a2ed-345c-41a6-89ae-1b81eb4d8ef3"
+      language-code="en"
+      max-query-length="-1">
+      <df-messenger-chat
+        chat-title="ExamAssistant">
+      </df-messenger-chat>
+    </df-messenger>
+    <style>
+      df-messenger {
+        z-index: 999;
+        position: fixed;
+        --df-messenger-font-color: #000;
+        --df-messenger-font-family: 'Roboto', sans-serif;
+        --df-messenger-chat-background: #f3f6fc;
+        --df-messenger-message-user-background: #d3e3fd;
+        --df-messenger-message-bot-background: #fff;
+        bottom: 20px;
+        right: 20px;
+        width: 380px;
+        height: 540px;
+      }
+    </style>
     
     <!-- JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
