@@ -1,43 +1,70 @@
 import os
 import logging
-from typing import List, Dict, Any
-
-# Import Google Cloud libraries
-try:
-    from google.cloud import aiplatform
-    from vertexai.preview.generative_models import GenerativeModel, Part
-except ImportError:
-    logging.error("Vertex AI libraries not available. Chatbot will not function.")
+import random
+from typing import Dict, Any
+from data import EXAM_CATEGORIES, EXAMS_DATA, get_exam_details, search_exams
 
 class ExamSeekChatbot:
     def __init__(self):
-        self.initialized = False
-        self.model = None
+        self.initialized = True
+        logging.info("Simple chatbot initialized successfully")
         
-        # Try to initialize Vertex AI
-        try:
-            # Initialize Vertex AI API
-            # If API_KEY is not provided, this will use the default authentication
-            # method using Application Default Credentials (ADC)
-            api_key = os.environ.get("VERTEX_AI_API_KEY")
-            
-            if api_key:
-                # Initialize with API key if provided
-                aiplatform.init(project=os.environ.get("GOOGLE_CLOUD_PROJECT", ""), 
-                                location=os.environ.get("VERTEX_AI_LOCATION", "us-central1"),
-                                api_key=api_key)
-            else:
-                # Initialize with default credentials
-                aiplatform.init(project=os.environ.get("GOOGLE_CLOUD_PROJECT", ""), 
-                                location=os.environ.get("VERTEX_AI_LOCATION", "us-central1"))
-            
-            # Load the model
-            self.model = GenerativeModel("gemini-pro")
-            self.initialized = True
-            logging.info("Vertex AI chatbot initialized successfully")
-        except Exception as e:
-            logging.error(f"Failed to initialize Vertex AI chatbot: {e}")
-            self.initialized = False
+        # Load exam data for reference
+        self.exam_categories = EXAM_CATEGORIES
+        self.exams_data = EXAMS_DATA
+        
+        # Define common responses and FAQs
+        self.common_questions = {
+            "help": "I can help you with information about entrance exams, government job exams, eligibility criteria, exam patterns, syllabus, and application procedures. Just ask me anything about Indian exams!",
+            "greeting": ["Hello! How can I help you with your exam preparation today?", 
+                       "Hi there! I'm ExamSeek Assistant. What would you like to know about exams?",
+                       "Welcome to ExamSeek! I'm here to help with your exam-related questions."],
+            "thanks": ["You're welcome! Feel free to ask if you have more questions.",
+                      "Happy to help! Let me know if you need anything else.",
+                      "Anytime! Good luck with your exam preparation!"],
+            "capabilities": "I can provide information about various Indian exams, including details on eligibility, exam patterns, important dates, and preparation tips. I can also help you find the right exam based on your interests.",
+            "bye": ["Goodbye! Good luck with your exam preparation!",
+                   "See you later! Don't hesitate to return if you have more questions.",
+                   "Bye! Wishing you success in your exams!"]
+        }
+        
+        self.exam_tips = {
+            "general": [
+                "Create a structured study plan and stick to it.",
+                "Take regular breaks during study sessions to maintain focus.",
+                "Practice previous years' question papers to understand the exam pattern.",
+                "Join study groups or find a study partner for motivation.",
+                "Stay healthy by getting enough sleep, exercise, and proper nutrition."
+            ],
+            "engineering": [
+                "Focus on understanding concepts rather than memorizing formulas.",
+                "Practice numerical problems regularly to build speed and accuracy.",
+                "For JEE/GATE, prioritize topics with higher weightage.",
+                "Create short notes for quick revision before the exam.",
+                "Solve mock tests under timed conditions to improve time management."
+            ],
+            "medical": [
+                "For NEET, thoroughly master NCERT textbooks before moving to reference books.",
+                "Practice diagram-based questions for Biology.",
+                "Memorize important reactions and equations in Chemistry.",
+                "Focus on understanding concepts in Physics rather than rote learning.",
+                "Take regular mock tests to identify and improve weak areas."
+            ],
+            "upsc": [
+                "Read newspapers daily to stay updated on current affairs.",
+                "Make concise notes while studying for effective revision.",
+                "Practice answer writing regularly for the Mains examination.",
+                "Develop a multidisciplinary approach to issues.",
+                "Focus on NCERT textbooks to build a strong foundation."
+            ],
+            "banking": [
+                "Practice quantitative aptitude and reasoning questions daily.",
+                "Stay updated with banking and financial current affairs.",
+                "Improve your speed and accuracy for the preliminary exam.",
+                "Take sectional tests to identify and work on weak areas.",
+                "Learn shortcuts for quick calculations in quantitative sections."
+            ]
+        }
 
     def get_response(self, message: str) -> Dict[str, Any]:
         """
@@ -49,7 +76,7 @@ class ExamSeekChatbot:
         Returns:
             A dictionary containing the response text and status
         """
-        if not self.initialized or not self.model:
+        if not self.initialized:
             return {
                 "text": "I'm sorry, but the AI assistant is currently unavailable. Please try again later.",
                 "status": "error",
@@ -57,41 +84,140 @@ class ExamSeekChatbot:
             }
         
         try:
-            # Create a system instruction that defines the role and scope of the assistant
-            system_instruction = """
-            You are ExamSeek Assistant, a helpful AI designed to provide accurate information about Indian public exams. 
-            You can help users with:
-            - Information about entrance exams in India (engineering, medical, law, management, etc.)
-            - Details about government job exams (UPSC, SSC, Banking, Railways, etc.)
-            - Guidance on eligibility criteria, exam patterns, syllabus, and application procedures
-            - Tips for exam preparation
+            # Convert message to lowercase for easier matching
+            message_lower = message.lower()
             
-            Please provide concise, accurate information. If you're unsure about any details, 
-            let the user know and suggest checking the official exam website for the most up-to-date information.
-            
-            Always maintain a helpful, professional tone.
-            """
-            
-            # Get response from the model with context
-            response = self.model.generate_content(
-                [system_instruction, message],
-                generation_config={
-                    "max_output_tokens": 1024,
-                    "temperature": 0.2,
-                    "top_p": 0.8,
-                    "top_k": 40
+            # Check for greetings
+            if any(word in message_lower for word in ["hello", "hi", "hey", "greetings", "namaste"]):
+                return {
+                    "text": random.choice(self.common_questions["greeting"]),
+                    "status": "success"
                 }
-            )
-            
+                
+            # Check for thanks
+            if any(word in message_lower for word in ["thank", "thanks", "appreciate", "helpful"]):
+                return {
+                    "text": random.choice(self.common_questions["thanks"]),
+                    "status": "success"
+                }
+                
+            # Check for goodbyes
+            if any(word in message_lower for word in ["bye", "goodbye", "see you", "farewell"]):
+                return {
+                    "text": random.choice(self.common_questions["bye"]),
+                    "status": "success"
+                }
+                
+            # Check for help request
+            if any(word in message_lower for word in ["help", "assist", "what can you do", "capabilities"]):
+                return {
+                    "text": self.common_questions["capabilities"],
+                    "status": "success"
+                }
+                
+            # Check for exam category information
+            for category in self.exam_categories:
+                category_name = category["name"].lower()
+                if category_name in message_lower or category["id"] in message_lower:
+                    subcategories = ", ".join([subcat["name"] for subcat in category["subcategories"]]) if category["subcategories"] else "No subcategories available"
+                    response = f"**{category['name']}**: {category['description']}\n\n"
+                    response += f"**Subcategories**: {subcategories}\n\n"
+                    response += "You can ask me about specific exams in this category!"
+                    return {
+                        "text": response,
+                        "status": "success"
+                    }
+                
+            # Check for specific exam information
+            for exam in self.exams_data:
+                exam_name_lower = exam["name"].lower()
+                exam_full_name_lower = exam["full_name"].lower()
+                
+                if exam_name_lower in message_lower or exam_full_name_lower in message_lower:
+                    # Looking for specific aspects
+                    if "eligibility" in message_lower:
+                        return {
+                            "text": f"**Eligibility for {exam['name']}**: {exam['eligibility']}",
+                            "status": "success"
+                        }
+                    elif "pattern" in message_lower or "structure" in message_lower:
+                        return {
+                            "text": f"**Exam Pattern for {exam['name']}**: {exam['exam_pattern']}",
+                            "status": "success"
+                        }
+                    elif "syllabus" in message_lower or "curriculum" in message_lower:
+                        return {
+                            "text": f"**Syllabus for {exam['name']}**: {exam['syllabus']}",
+                            "status": "success"
+                        }
+                    elif "application" in message_lower or "apply" in message_lower or "registration" in message_lower:
+                        return {
+                            "text": f"**Application Procedure for {exam['name']}**: {exam['application_procedure']}",
+                            "status": "success"
+                        }
+                    elif "date" in message_lower or "schedule" in message_lower or "when" in message_lower:
+                        dates_info = "\n".join([f"- **{key.replace('_', ' ').title()}**: {value}" for key, value in exam["important_dates"].items()])
+                        return {
+                            "text": f"**Important Dates for {exam['name']}**:\n{dates_info}",
+                            "status": "success"
+                        }
+                    elif "tip" in message_lower or "advice" in message_lower or "prepare" in message_lower or "suggestion" in message_lower:
+                        tips = "\n".join([f"- {tip}" for tip in exam["preparation_tips"]]) if "preparation_tips" in exam else "No specific tips available for this exam."
+                        return {
+                            "text": f"**Preparation Tips for {exam['name']}**:\n{tips}",
+                            "status": "success"
+                        }
+                    else:
+                        # General overview
+                        response = f"**{exam['full_name']} ({exam['name']})**\n\n"
+                        response += f"{exam['description']}\n\n"
+                        response += f"**Conducted by**: {exam['conducting_body']}\n"
+                        response += f"**Frequency**: {exam['frequency']}\n\n"
+                        response += "You can ask me more specific questions about eligibility, exam pattern, syllabus, application procedure, or important dates for this exam!"
+                        return {
+                            "text": response,
+                            "status": "success"
+                        }
+                        
+            # Check for preparation tips
+            if "tip" in message_lower or "advice" in message_lower or "suggestion" in message_lower or "prepare" in message_lower:
+                # Check for category-specific tips
+                for category_key, category_name in [
+                    ("engineering", ["engineering", "jee", "gate", "technical"]),
+                    ("medical", ["medical", "neet", "doctor", "mbbs"]),
+                    ("upsc", ["upsc", "civil service", "ias", "ips", "government service"]),
+                    ("banking", ["bank", "sbi", "rbi", "finance"])
+                ]:
+                    if any(term in message_lower for term in category_name):
+                        tips = "\n".join([f"- {tip}" for tip in self.exam_tips[category_key]])
+                        return {
+                            "text": f"**Preparation Tips for {category_key.title()} Exams**:\n{tips}",
+                            "status": "success"
+                        }
+                
+                # General tips if no specific category found
+                tips = "\n".join([f"- {tip}" for tip in self.exam_tips["general"]])
+                return {
+                    "text": f"**General Exam Preparation Tips**:\n{tips}",
+                    "status": "success"
+                }
+                
+            # If no specific match is found, provide a general response
             return {
-                "text": response.text,
+                "text": "I'm not sure I understand your question. You can ask me about:\n\n" +
+                       "- Specific exams like JEE, NEET, UPSC, SBI PO, etc.\n" +
+                       "- Exam categories like Engineering, Medical, Banking\n" +
+                       "- Details like eligibility, exam pattern, syllabus\n" +
+                       "- Application procedures and important dates\n" +
+                       "- Preparation tips and advice\n\n" +
+                       "Could you please rephrase your question?",
                 "status": "success"
             }
             
         except Exception as e:
-            logging.error(f"Error getting response from Vertex AI: {e}")
+            logging.error(f"Error processing message: {e}")
             return {
-                "text": "I'm sorry, but I encountered an error processing your request. Please try again later.",
+                "text": "I'm sorry, but I encountered an error processing your request. Please try again with a different question.",
                 "status": "error",
                 "error": str(e)
             }
