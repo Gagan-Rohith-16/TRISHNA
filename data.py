@@ -257,7 +257,161 @@ EXAMS_DATA = [
             "Regularly attempt mock tests"
         ]
     },
+    # UPSC EXAMS - DEFENSE SERVICES
+    {
+        "id": "upsc_nda",
+        "name": "NDA",
+        "full_name": "National Defence Academy & Naval Academy Examination",
+        "category": "upsc",
+        "subcategory": "upsc_defense",
+        "description": "NDA exam is conducted for admission to the Army, Navy and Air Force wings of the National Defence Academy and Indian Naval Academy Course.",
+        "conducting_body": "Union Public Service Commission (UPSC)",
+        "frequency": "Twice a year",
+        "eligibility": "For Army wing: 10+2 pass. For Air Force and Naval Wings: 10+2 with Physics and Mathematics.",
+        "age_limit": "16.5-19.5 years",
+        "exam_pattern": "Written exam followed by SSB Interview. Written exam consists of Mathematics (300 marks) and General Ability Test (600 marks).",
+        "syllabus": "Mathematics: Algebra, Matrices and Determinants, Trigonometry, Analytical Geometry, Differential Calculus, Integral Calculus, Vector Algebra, Statistics. General Ability Test: English, General Knowledge (Physics, Chemistry, Biology, History, Geography, Current Events).",
+        "application_procedure": "Online application through the UPSC website. Registration typically opens in December (for April exam) and June (for September exam).",
+        "important_dates": {
+            "application_start": "Generally in December (for April exam) and June (for September exam)",
+            "application_end": "Generally in January (for April exam) and July (for September exam)",
+            "exam_date": "Generally in April and September",
+            "ssb_interview": "3-4 months after the written exam",
+            "final_result_date": "Generally 6-7 months after the written exam"
+        },
+        "website": "https://www.upsc.gov.in/",
+        "preparation_tips": [
+            "Focus on NCERT books for building strong fundamentals",
+            "Practice mathematics regularly",
+            "Stay updated with current affairs",
+            "Improve English language skills",
+            "Prepare for SSB Interview alongside written exam"
+        ]
+    },
+    {
+        "id": "upsc_cms",
+        "name": "UPSC CMS",
+        "full_name": "Combined Medical Services Examination",
+        "category": "upsc",
+        "subcategory": "upsc_others",
+        "description": "UPSC CMS is conducted for recruitment to various medical posts like Medical Officer, Assistant Divisional Medical Officer, etc. in different government departments.",
+        "conducting_body": "Union Public Service Commission (UPSC)",
+        "frequency": "Once a year",
+        "eligibility": "MBBS degree with completion of internship.",
+        "age_limit": "32 years (with relaxations for reserved categories)",
+        "exam_pattern": "Two papers (Paper I and Paper II) of objective type (multiple choice questions), followed by Personality Test/Interview.",
+        "syllabus": "Paper I: General Medicine & Paediatrics. Paper II: Surgery, Gynaecology & Obstetrics, Preventive & Social Medicine.",
+        "application_procedure": "Online application through the UPSC website. Registration typically opens in April-May.",
+        "important_dates": {
+            "application_start": "Generally in April-May",
+            "application_end": "Generally in May",
+            "exam_date": "Generally in July",
+            "interview_date": "Generally in November-December",
+            "final_result_date": "Generally in December-January"
+        },
+        "website": "https://www.upsc.gov.in/",
+        "preparation_tips": [
+            "Study standard medical textbooks",
+            "Focus on clinical aspects of medicine",
+            "Practice previous years' question papers",
+            "Stay updated with recent developments in medical field",
+            "Prepare for interview alongside written exam"
+        ]
+    },
+    # SSC EXAMS ADDITIONAL
+    {
+        "id": "ssc_chsl",
+        "name": "SSC CHSL",
+        "full_name": "Staff Selection Commission Combined Higher Secondary Level",
+        "category": "ssc",
+        "subcategory": "",
+        "description": "SSC CHSL is conducted for recruitment to various posts like Lower Divisional Clerk (LDC), Junior Secretariat Assistant (JSA), Postal Assistant (PA), Sorting Assistant (SA), and Data Entry Operator (DEO).",
+        "conducting_body": "Staff Selection Commission (SSC)",
+        "frequency": "Once a year",
+        "eligibility": "12th pass or equivalent from a recognized board or university.",
+        "age_limit": "18-27 years (with relaxations for reserved categories)",
+        "exam_pattern": "Three tiers: Tier 1 (Computer Based Test), Tier 2 (Computer Based Test), and Tier 3 (Skill Test/Typing Test).",
+        "syllabus": "Tier 1: General Intelligence, English Language, Quantitative Aptitude, General Awareness. Tier 2: English Language and Comprehension. Tier 3: Skill Test/Typing Test.",
+        "application_procedure": "Online application through the SSC website. Registration typically opens once a year.",
+        "important_dates": {
+            "application_start": "Generally in October-November",
+            "application_end": "Generally in December",
+            "tier_1_exam_date": "Generally in March-April",
+            "tier_2_exam_date": "Generally in June-July",
+            "tier_3_exam_date": "Generally in September-October",
+            "final_result_date": "Generally in December-January"
+        },
+        "website": "https://ssc.nic.in/",
+        "preparation_tips": [
+            "Focus on the basics of all subjects",
+            "Practice time management",
+            "Improve typing speed for Tier 3",
+            "Stay updated with current affairs",
+            "Take mock tests regularly"
+        ]
+    },
+    {
+        "id": "ssc_mts",
+        "name": "SSC MTS",
+        "full_name": "Staff Selection Commission Multi Tasking Staff",
+        "category": "ssc",
+        "subcategory": "",
+        "description": "SSC MTS is conducted for recruitment to Multi Tasking Staff posts in various Ministries/Departments/Offices of the Government of India.",
+        "conducting_body": "Staff Selection Commission (SSC)",
+        "frequency": "Once a year",
+        "eligibility": "10th pass or equivalent from a recognized board.",
+        "age_limit": "18-25 years (with relaxations for reserved categories)",
+        "exam_pattern": "Two papers: Paper 1 (Objective Multiple Choice) and Paper 2 (Descriptive).",
+        "syllabus": "Paper 1: General Intelligence & Reasoning, Numerical Aptitude, General English, General Awareness. Paper 2: Letter/Application Writing and Essay Writing.",
+        "application_procedure": "Online application through the SSC website. Registration typically opens once a year.",
+        "important_dates": {
+            "application_start": "Generally in January-February",
+            "application_end": "Generally in March",
+            "paper_1_exam_date": "Generally in July-August",
+            "paper_2_exam_date": "Generally in November-December",
+            "final_result_date": "Generally in March-April (of the following year)"
+        },
+        "website": "https://ssc.nic.in/",
+        "preparation_tips": [
+            "Focus on the basics of all subjects",
+            "Practice numerical ability and reasoning daily",
+            "Improve English writing skills for Paper 2",
+            "Stay updated with current affairs",
+            "Take mock tests regularly"
+        ]
+    },
     # BANKING EXAMS
+    {
+        "id": "ibps_po",
+        "name": "IBPS PO",
+        "full_name": "Institute of Banking Personnel Selection Probationary Officer",
+        "category": "banking",
+        "subcategory": "bank_po",
+        "description": "IBPS PO is a national level exam conducted for recruitment of Probationary Officers in various participating public sector banks in India.",
+        "conducting_body": "Institute of Banking Personnel Selection (IBPS)",
+        "frequency": "Once a year",
+        "eligibility": "Graduates in any discipline from a recognized university with minimum 60% marks (55% for reserved categories).",
+        "age_limit": "20-30 years (with relaxations for reserved categories)",
+        "exam_pattern": "Three phases: Preliminary Exam, Main Exam, and Interview.",
+        "syllabus": "Preliminary: English Language, Quantitative Aptitude, and Reasoning Ability. Mains: Reasoning & Computer Aptitude, General/Economy/Banking Awareness, English Language, Data Analysis & Interpretation.",
+        "application_procedure": "Online application through the IBPS website. Registration typically opens once a year.",
+        "important_dates": {
+            "application_start": "Generally in August",
+            "application_end": "Generally in September",
+            "prelims_exam_date": "Generally in October",
+            "mains_exam_date": "Generally in November",
+            "interview_date": "Generally in January-February",
+            "final_result_date": "Generally in April"
+        },
+        "website": "https://www.ibps.in/",
+        "preparation_tips": [
+            "Focus on building speed and accuracy",
+            "Practice quantitative aptitude and reasoning daily",
+            "Stay updated with banking current affairs",
+            "Attempt previous years' papers",
+            "Take mock tests regularly"
+        ]
+    },
     {
         "id": "sbi_po",
         "name": "SBI PO",
@@ -286,6 +440,97 @@ EXAMS_DATA = [
             "Practice quantitative aptitude and reasoning daily",
             "Stay updated with banking current affairs",
             "Attempt previous years' papers",
+            "Take mock tests regularly"
+        ]
+    },
+    {
+        "id": "ibps_clerk",
+        "name": "IBPS Clerk",
+        "full_name": "Institute of Banking Personnel Selection Clerk",
+        "category": "banking",
+        "subcategory": "bank_clerk",
+        "description": "IBPS Clerk is a national level exam conducted for recruitment of clerical cadre positions in various participating public sector banks in India.",
+        "conducting_body": "Institute of Banking Personnel Selection (IBPS)",
+        "frequency": "Once a year",
+        "eligibility": "Graduates in any discipline from a recognized university.",
+        "age_limit": "20-28 years (with relaxations for reserved categories)",
+        "exam_pattern": "Two phases: Preliminary Exam and Main Exam.",
+        "syllabus": "Preliminary: English Language, Numerical Ability, and Reasoning Ability. Mains: General/Financial Awareness, General English, Reasoning Ability & Computer Aptitude, and Quantitative Aptitude.",
+        "application_procedure": "Online application through the IBPS website. Registration typically opens once a year.",
+        "important_dates": {
+            "application_start": "Generally in September",
+            "application_end": "Generally in October",
+            "prelims_exam_date": "Generally in November-December",
+            "mains_exam_date": "Generally in January",
+            "final_result_date": "Generally in April"
+        },
+        "website": "https://www.ibps.in/",
+        "preparation_tips": [
+            "Focus on building speed and accuracy",
+            "Practice quantitative aptitude and reasoning daily",
+            "Stay updated with banking current affairs",
+            "Attempt previous years' papers",
+            "Take mock tests regularly"
+        ]
+    },
+    {
+        "id": "rbi_assistant",
+        "name": "RBI Assistant",
+        "full_name": "Reserve Bank of India Assistant",
+        "category": "banking",
+        "subcategory": "bank_clerk",
+        "description": "RBI Assistant exam is conducted for recruitment of Assistants in various offices of the Reserve Bank of India.",
+        "conducting_body": "Reserve Bank of India (RBI)",
+        "frequency": "Once a year (not regular)",
+        "eligibility": "Graduates in any discipline from a recognized university.",
+        "age_limit": "20-28 years (with relaxations for reserved categories)",
+        "exam_pattern": "Two phases: Preliminary Exam and Main Exam, followed by Language Proficiency Test.",
+        "syllabus": "Preliminary: English Language, Numerical Ability, and Reasoning Ability. Mains: Test of Reasoning, English Language, Numerical Ability, General Awareness, and Computer Knowledge.",
+        "application_procedure": "Online application through the RBI website when notification is released.",
+        "important_dates": {
+            "application_start": "As per notification",
+            "application_end": "As per notification",
+            "prelims_exam_date": "As per notification",
+            "mains_exam_date": "As per notification",
+            "final_result_date": "As per notification"
+        },
+        "website": "https://www.rbi.org.in/",
+        "preparation_tips": [
+            "Focus on building speed and accuracy",
+            "Practice quantitative aptitude and reasoning daily",
+            "Stay updated with banking and economic current affairs",
+            "Improve computer knowledge",
+            "Take mock tests regularly"
+        ]
+    },
+    {
+        "id": "ibps_so",
+        "name": "IBPS SO",
+        "full_name": "Institute of Banking Personnel Selection Specialist Officer",
+        "category": "banking",
+        "subcategory": "bank_specialist",
+        "description": "IBPS SO is conducted for recruitment of specialists officers in various participating public sector banks in India for technical posts like IT Officer, Agriculture Field Officer, HR Officer, etc.",
+        "conducting_body": "Institute of Banking Personnel Selection (IBPS)",
+        "frequency": "Once a year",
+        "eligibility": "Varies for different specialist posts, but generally requires a relevant professional degree/qualification.",
+        "age_limit": "20-30 years (with relaxations for reserved categories)",
+        "exam_pattern": "Three phases: Preliminary Exam, Main Exam, and Interview.",
+        "syllabus": "Preliminary: Reasoning, English Language, and Quantitative Aptitude. Mains: Professional Knowledge (related to the post) and General Awareness, English Language, Reasoning, Computer Knowledge.",
+        "application_procedure": "Online application through the IBPS website. Registration typically opens once a year.",
+        "important_dates": {
+            "application_start": "Generally in November",
+            "application_end": "Generally in November",
+            "prelims_exam_date": "Generally in December",
+            "mains_exam_date": "Generally in January",
+            "interview_date": "Generally in February",
+            "final_result_date": "Generally in April"
+        },
+        "website": "https://www.ibps.in/",
+        "preparation_tips": [
+            "Focus on professional knowledge related to the post",
+            "Strengthen fundamentals in general banking awareness",
+            "Practice reasoning and quantitative aptitude",
+            "Stay updated with current affairs in banking and finance",
             "Take mock tests regularly"
         ]
     },
