@@ -146,10 +146,15 @@
     <!-- Dialogflow Chatbot Integration -->
     <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-    <df-messenger
+    <div id="chatbot-toggle-btn" class="chatbot-toggle-button">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <df-messenger id="df-messenger-element"
       project-id="financeflow-453019"
       agent-id="7612a2ed-345c-41a6-89ae-1b81eb4d8ef3"
       language-code="en"
+      chat-icon="none"
+      expand="false"
       max-query-length="-1">
       <df-messenger-chat
         chat-title="ExamAssistant">
@@ -168,8 +173,59 @@
         right: 20px;
         width: 380px;
         height: 540px;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      
+      df-messenger.visible {
+        visibility: visible;
+        opacity: 1;
+      }
+      
+      .chatbot-toggle-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #1A237E;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+      
+      .chatbot-toggle-button:hover {
+        background-color: #3949AB;
+        transform: scale(1.05);
+      }
+      
+      .chatbot-toggle-button i {
+        font-size: 24px;
       }
     </style>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const chatbotToggleBtn = document.getElementById('chatbot-toggle-btn');
+        const dfMessengerElement = document.getElementById('df-messenger-element');
+        
+        chatbotToggleBtn.addEventListener('click', function() {
+          dfMessengerElement.classList.toggle('visible');
+          
+          // If opening, ensure it's expanded
+          if (dfMessengerElement.classList.contains('visible')) {
+            dfMessengerElement.removeAttribute('expand');
+          }
+        });
+      });
+    </script>
     
     <!-- JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
