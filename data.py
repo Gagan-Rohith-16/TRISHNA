@@ -18,6 +18,12 @@ EXAM_CATEGORIES = [
         "icon_class": "fa-stethoscope"
     },
     {
+        "id": "intermediate",
+        "name": "Intermediate & Board Exams",
+        "description": "Class 10th and 12th board examinations and other intermediate level exams",
+        "icon_class": "fa-school"
+    },
+    {
         "id": "management",
         "name": "Management Entrance Exams",
         "description": "Exams for admission to MBA and other management courses",
@@ -138,6 +144,35 @@ EXAMS_DATA = [
             "Practice previous years' papers extensively",
             "Attempt mock tests with increasing difficulty",
             "Work on speed and accuracy"
+        ]
+    },
+    {
+        "id": "gate",
+        "name": "GATE",
+        "full_name": "Graduate Aptitude Test in Engineering",
+        "category": "engineering",
+        "subcategory": "eng_national",
+        "description": "GATE is a national level examination that primarily tests the comprehensive understanding of various undergraduate subjects in engineering and technology for admission into postgraduate programs and recruitment in public sector companies.",
+        "conducting_body": "IITs and IISc on rotational basis",
+        "frequency": "Once a year",
+        "eligibility": "Bachelor's degree holders in Engineering/Technology/Architecture/Science/Commerce/Arts or students in the final year of such programs.",
+        "age_limit": "No age limit",
+        "exam_pattern": "Computer Based Test with Multiple Choice Questions (MCQs), Multiple Select Questions (MSQs) and Numerical Answer Type (NAT) questions. The exam duration is 3 hours with a total of 100 marks.",
+        "syllabus": "General Aptitude (15 marks) and subject-specific technical section (85 marks). There are 29 different subject papers including Civil Engineering, Computer Science, Electrical Engineering, Mechanical Engineering, etc.",
+        "application_procedure": "Online application through the GATE Online Application Processing System (GOAPS). Registration typically opens in September.",
+        "important_dates": {
+            "application_start": "Generally in September",
+            "application_end": "Generally in October",
+            "exam_date": "Generally in February",
+            "result_date": "Generally in March"
+        },
+        "website": "https://gate.iitk.ac.in/",
+        "preparation_tips": [
+            "Study standard textbooks for your subject",
+            "Understand the concepts thoroughly rather than memorizing",
+            "Practice previous years' question papers",
+            "Focus on General Aptitude section as it's common for all papers",
+            "Take regular mock tests to improve time management"
         ]
     },
     # MEDICAL ENTRANCE EXAMS - NATIONAL LEVEL
@@ -897,6 +932,119 @@ EXAMS_DATA = [
             "Develop speaking skills through regular practice",
             "Practice writing essays on various topics",
             "Take full-length practice tests"
+        ]
+    },
+    # INTERMEDIATE & BOARD EXAMINATIONS
+    {
+        "id": "cbse_10",
+        "name": "CBSE Class 10",
+        "full_name": "Central Board of Secondary Education Class 10 Examination",
+        "category": "intermediate",
+        "subcategory": "",
+        "description": "CBSE Class 10 board examination is a nationwide examination conducted by the Central Board of Secondary Education for students who have completed their 10th grade education.",
+        "conducting_body": "Central Board of Secondary Education (CBSE)",
+        "frequency": "Once a year",
+        "eligibility": "Students enrolled in CBSE-affiliated schools who have completed Class 9 and are studying in Class 10.",
+        "age_limit": "No specific age limit, typically 15-17 years",
+        "exam_pattern": "Theory exams for all subjects. Mathematics, Science, Social Science, English, Second Language (Hindi/Sanskrit/Other) and optional subjects. Most papers are for 80 marks (theory) and 20 marks (internal assessment).",
+        "syllabus": "NCERT curriculum for Class 10 covering Mathematics, Science, Social Science, English, Hindi/Other languages, and optional subjects.",
+        "application_procedure": "Registration through the schools. Schools submit the list of candidates to CBSE.",
+        "important_dates": {
+            "registration": "Generally in September-October",
+            "exam_date": "Generally in February-March",
+            "result_date": "Generally in May-June"
+        },
+        "website": "https://www.cbse.gov.in/",
+        "preparation_tips": [
+            "Focus on NCERT textbooks thoroughly",
+            "Practice previous years' question papers",
+            "Create concise notes for revision",
+            "Focus on concepts rather than rote learning",
+            "Take regular mock tests to improve time management"
+        ]
+    },
+    {
+        "id": "cbse_12",
+        "name": "CBSE Class 12",
+        "full_name": "Central Board of Secondary Education Class 12 Examination",
+        "category": "intermediate",
+        "subcategory": "",
+        "description": "CBSE Class 12 board examination is a nationwide examination conducted by the Central Board of Secondary Education for students who have completed their 12th grade education. It is considered a crucial examination as its results are used for admission to undergraduate courses.",
+        "conducting_body": "Central Board of Secondary Education (CBSE)",
+        "frequency": "Once a year",
+        "eligibility": "Students enrolled in CBSE-affiliated schools who have passed Class 11 and are studying in Class 12.",
+        "age_limit": "No specific age limit, typically 17-19 years",
+        "exam_pattern": "Theory exams for all chosen subjects. Science stream includes Physics, Chemistry, Mathematics/Biology, English, and optional subjects. Commerce stream includes Accountancy, Business Studies, Economics, English, and optional subjects. Most papers are for 70-80 marks (theory) and 20-30 marks (internal assessment/practicals).",
+        "syllabus": "NCERT curriculum for Class 12 covering subjects based on chosen stream (Science, Commerce, Arts).",
+        "application_procedure": "Registration through the schools. Schools submit the list of candidates to CBSE.",
+        "important_dates": {
+            "registration": "Generally in September-October",
+            "exam_date": "Generally in February-March",
+            "result_date": "Generally in May"
+        },
+        "website": "https://www.cbse.gov.in/",
+        "preparation_tips": [
+            "Master NCERT textbooks",
+            "Solve previous years' question papers and sample papers",
+            "Create concise notes for quick revision",
+            "Focus on understanding concepts thoroughly",
+            "Practice time management with regular mock tests"
+        ]
+    },
+    {
+        "id": "icse_10",
+        "name": "ICSE Class 10",
+        "full_name": "Indian Certificate of Secondary Education Examination",
+        "category": "intermediate",
+        "subcategory": "",
+        "description": "ICSE Class 10 examination is conducted by the Council for the Indian School Certificate Examinations (CISCE) for students who have completed their 10th grade education.",
+        "conducting_body": "Council for the Indian School Certificate Examinations (CISCE)",
+        "frequency": "Once a year",
+        "eligibility": "Students enrolled in CISCE-affiliated schools who have completed Class 9 and are studying in Class 10.",
+        "age_limit": "No specific age limit, typically 15-17 years",
+        "exam_pattern": "Theory exams for all subjects. English Language, English Literature, History & Civics, Geography, Mathematics, Physics, Chemistry, Biology, Second Language, and optional subjects. Most papers have both objective and subjective questions.",
+        "syllabus": "CISCE curriculum for Class 10 covering all the prescribed subjects.",
+        "application_procedure": "Registration through the schools. Schools submit the list of candidates to CISCE.",
+        "important_dates": {
+            "registration": "Generally in September-October",
+            "exam_date": "Generally in February-March",
+            "result_date": "Generally in May"
+        },
+        "website": "https://www.cisce.org/",
+        "preparation_tips": [
+            "Study prescribed textbooks thoroughly",
+            "Practice previous years' question papers",
+            "Focus on English language and literature",
+            "Create concise notes for revision",
+            "Take regular mock tests"
+        ]
+    },
+    {
+        "id": "isc_12",
+        "name": "ISC Class 12",
+        "full_name": "Indian School Certificate Examination",
+        "category": "intermediate",
+        "subcategory": "",
+        "description": "ISC Class 12 examination is conducted by the Council for the Indian School Certificate Examinations (CISCE) for students who have completed their 12th grade education.",
+        "conducting_body": "Council for the Indian School Certificate Examinations (CISCE)",
+        "frequency": "Once a year",
+        "eligibility": "Students enrolled in CISCE-affiliated schools who have passed ICSE (Class 10) or an equivalent examination and have completed Class 11.",
+        "age_limit": "No specific age limit, typically 17-19 years",
+        "exam_pattern": "Theory exams for all chosen subjects. Science stream includes English, Physics, Chemistry, Mathematics/Biology and optional subjects. Commerce stream includes English, Accounts, Business Studies, Economics, and optional subjects. Arts stream includes English and other chosen subjects.",
+        "syllabus": "CISCE curriculum for Class 12 covering subjects based on chosen stream (Science, Commerce, Arts).",
+        "application_procedure": "Registration through the schools. Schools submit the list of candidates to CISCE.",
+        "important_dates": {
+            "registration": "Generally in September-October",
+            "exam_date": "Generally in February-March",
+            "result_date": "Generally in May"
+        },
+        "website": "https://www.cisce.org/",
+        "preparation_tips": [
+            "Study reference books beyond prescribed textbooks",
+            "Practice previous years' question papers extensively",
+            "Focus on developing good English writing skills",
+            "Create comprehensive notes for each subject",
+            "Take regular mock tests to improve time management"
         ]
     }
 ]
