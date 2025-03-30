@@ -16,7 +16,11 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 # create the app
 app = Flask(__name__)
-app.secret_key = os.environ.get("SESSION_SECRET")
+# ...existing code...
+
+app.secret_key = os.environ.get("SESSION_SECRET", "Gagan@2005")  # Replace "fallback_secret_key" with a strong, random key
+
+# ...existing code...
 
 # configure the database
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///examseek.db")
