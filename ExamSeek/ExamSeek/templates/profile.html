@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="profile-header">
+    <div class="container">
+        <h1>Welcome, {{ current_user.username }}</h1>
+        <p>Manage your saved exams and profile information</p>
+    </div>
+</section>
+
+<section class="container">
+    <div class="profile-content">
+        <div class="profile-sidebar">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <h3>{{ current_user.username }}</h3>
+                <p>{{ current_user.email }}</p>
+                <p>Member since {{ current_user.created_at.strftime('%B %d, %Y') }}</p>
+            </div>
+            
+            <div class="profile-nav">
+                <a href="#saved-exams" class="profile-nav-item active">
+                    <i class="fas fa-bookmark"></i> Saved Exams
+                </a>
+                <a href="#account-settings" class="profile-nav-item">
+                    <i class="fas fa-cog"></i> Account Settings
+                </a>
+                <a href="{{ url_for('logout') }}" class="profile-nav-item">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+        
+        <div class="profile-main">
+            <div id="saved-exams" class="profile-section active">
+                <h2>Saved Exams</h2>
+                
+                {% if saved_exams %}
+                <div class="saved-exams-list">
+                    {% for exam in saved_exams %}
+                    <div class="saved-exam-item">
+                        <div class="saved-exam-info">
+                            <h3>{{ exam.name }}</h3>
+                            <p>{{ exam.description|truncate(150) }}</p>
+                            <div class="exam-meta">
+                                <span class="exam-meta-item">{{ exam.conducting_body }}</span>
+                                <span class="exam-meta-item">{{ exam.category|capitalize }}</span>
+                            </div>
+                        </div>
+                        <div class="saved-exam-actions">
+                            <a href="{{ url_for('exam_detail', exam_id=exam.id) }}" class="btn btn-secondary">View Details</a>
+                            <button class="btn btn-danger unsave-exam-btn" data-exam-id="{{ exam.id }}">Remove</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="no-saved-exams">
+                    <i class="fas fa-bookmark"></i>
+                    <h3>No Saved Exams</h3>
+                    <p>You haven't saved any exams yet. Browse exams and save them for quick access later.</p>
+                    <a href="{{ url_for('home') }}#exam-categories" class="btn btn-primary">Browse Exams</a>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div id="account-settings" class="profile-section">
+                <h2>Account Settings</h2>
+                
+                <div class="account-settings-form">
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" value="{{ current_user.username }}" disabled>
+                        <small class="form-text">Username cannot be changed</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="{{ current_user.email }}" disabled>
+                        <small class="form-text">Email cannot be changed</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <button class="btn btn-secondary" disabled>Change Password</button>
+                        <small class="form-text">Password change functionality coming soon</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
