@@ -215,14 +215,55 @@
       document.addEventListener('DOMContentLoaded', function() {
         const chatbotToggleBtn = document.getElementById('chatbot-toggle-btn');
         const dfMessengerElement = document.getElementById('df-messenger-element');
+        let hasReceivedResponse = false;
         
-        chatbotToggleBtn.addEventListener('click', function() {
+        // Check if we're on chatbot page - don't auto-close if we are
+        const isChatbotPage = window.location.pathname.includes('/chatbot-page');
+        
+        // Toggle chatbot when icon is clicked
+        chatbotToggleBtn.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent immediate closing
           dfMessengerElement.classList.toggle('visible');
           
           // If opening, ensure it's expanded
           if (dfMessengerElement.classList.contains('visible')) {
             dfMessengerElement.removeAttribute('expand');
+            hasReceivedResponse = false;
           }
+        });
+        
+        // Listen for Dialogflow messenger events
+        document.addEventListener('df-messenger-error', function(event) {
+          console.log('Dialogflow Messenger error:', event);
+        });
+        
+        // Listen for responses from the chatbot
+        document.addEventListener('df-response-received', function(event) {
+          hasReceivedResponse = true;
+          console.log('Response received, auto-close enabled');
+        });
+        
+        // Listen for clicks anywhere on the page
+        if (!isChatbotPage) {
+          document.addEventListener('click', function(e) {
+            // Check if click is outside chatbot and toggle button
+            const isClickInsideChatbot = dfMessengerElement.contains(e.target);
+            const isClickOnToggleBtn = chatbotToggleBtn.contains(e.target);
+            
+            // Only close if already visible, received a response, and clicked outside
+            if (dfMessengerElement.classList.contains('visible') && 
+                hasReceivedResponse && 
+                !isClickInsideChatbot && 
+                !isClickOnToggleBtn) {
+              dfMessengerElement.classList.remove('visible');
+              console.log('Auto-closing chatbot after user clicked elsewhere');
+            }
+          });
+        }
+        
+        // Prevent clicks inside the chatbot from propagating to document
+        dfMessengerElement.addEventListener('click', function(e) {
+          e.stopPropagation();
         });
       });
     </script>
