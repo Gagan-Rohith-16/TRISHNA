@@ -268,6 +268,51 @@
       });
     </script>
     
+    <!-- Custom Styles for Password Fields -->
+    <style>
+      .password-container {
+        position: relative;
+      }
+      
+      .password-toggle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #6c757d;
+        z-index: 10;
+      }
+      
+      .password-toggle:hover {
+        color: #1A237E;
+      }
+    </style>
+    
+    <!-- Password Toggle Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const toggleButtons = document.querySelectorAll('.password-toggle');
+        
+        toggleButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const passwordField = this.parentElement.querySelector('input');
+            
+            // Toggle between password and text input types
+            if (passwordField.type === 'password') {
+              passwordField.type = 'text';
+              this.classList.remove('fa-eye');
+              this.classList.add('fa-eye-slash');
+            } else {
+              passwordField.type = 'password';
+              this.classList.remove('fa-eye-slash');
+              this.classList.add('fa-eye');
+            }
+          });
+        });
+      });
+    </script>
+    
     <!-- JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>

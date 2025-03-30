@@ -39,31 +39,37 @@
                 
                 <div class="form-group">
                     {{ form.password.label(class="form-label") }}
-                    {% if form.password.errors %}
-                        {{ form.password(class="form-control is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.password(class="form-control") }}
-                    {% endif %}
+                    <div class="password-container">
+                        {% if form.password.errors %}
+                            {{ form.password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.password(class="form-control") }}
+                        {% endif %}
+                        <i class="password-toggle fas fa-eye"></i>
+                    </div>
                     <small class="form-text">Password must be at least 6 characters long.</small>
                 </div>
                 
                 <div class="form-group">
                     {{ form.confirm_password.label(class="form-label") }}
-                    {% if form.confirm_password.errors %}
-                        {{ form.confirm_password(class="form-control is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.confirm_password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.confirm_password(class="form-control") }}
-                    {% endif %}
+                    <div class="password-container">
+                        {% if form.confirm_password.errors %}
+                            {{ form.confirm_password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.confirm_password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.confirm_password(class="form-control") }}
+                        {% endif %}
+                        <i class="password-toggle fas fa-eye"></i>
+                    </div>
                 </div>
                 
                 <div class="form-group">
